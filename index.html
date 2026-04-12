@@ -490,7 +490,7 @@
     const container = document.getElementById('subfilters');
     const prevQ = container.querySelector('.search-input')?.value || '';
     container.innerHTML = labels.map(([key, label]) =>
-      `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label}<span class="sf-count">${counts[key]}</span></button>`
+      `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
     ).join('') +
       `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
     container.querySelectorAll('.subfilter').forEach(btn => {
@@ -541,7 +541,7 @@
 
     // Update Veneers tab with total count
     const tabBtn = document.getElementById('tab-veneers');
-    tabBtn.innerHTML = `Veneers <span class="sf-count">${allFilms.length}</span>`;
+    tabBtn.innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
 
     document.querySelectorAll('.img-wrap').forEach(el => {
       const open = () => openDrawer(el.dataset.file, el.dataset.name);

@@ -265,6 +265,28 @@
   },
   {
     "rank": 13,
+    "name": "Shaohua Faded Walnut (Rift-Fine)",
+    "brand": "Shaohua (韶华) / Aesthetics",
+    "code": "WN1517-3",
+    "species": "Faded Walnut",
+    "speciesLatin": "Juglans regia (limed/bleached)",
+    "cut": "Fine flat cut — near-rift parallel grain, tight line density",
+    "finish": "Satin ~8–12% — best-calibrated Shaohua film; no fix needed",
+    "demand": 7.0,
+    "mimicry": 7.0,
+    "score": 7.5,
+    "tier": "Strong Contender",
+    "bestSegments": "Design-Forward Architects · Aspirational Professionals (Japandi) · Luxury HNI",
+    "bestCities": "Bengaluru · Mumbai · Pune",
+    "topApplication": "TV walls (Japandi) · Home office · Bedroom headboard (minimal)",
+    "keyStrength": "Only faded/limed walnut in catalog; rose-mauve tone owns unique territory; stain/scratch resistant",
+    "keyWeakness": "2–3 years ahead of mainstream India demand; heritage and Tier-2 buyers will not recognise the aesthetic",
+    "priorityFix": "No finish fix needed — build a Japandi sample board pairing with NB018 ash; position as exclusive early-access product",
+    "image": "./films/images/shaohua-wn1517-3-faded-walnut.jpg",
+    "file": "./films/shaohua-wn1517-3-faded-walnut-film.md"
+  },
+  {
+    "rank": 14,
     "name": "Huichuang Teak (Flat Cut, Character)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB009-1",
@@ -286,7 +308,7 @@
     "file": "./films/huichuang-nb009-1-teak-film.md"
   },
   {
-    "rank": 14,
+    "rank": 15,
     "name": "Huichuang Teak (Rift Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015",
@@ -308,7 +330,7 @@
     "file": "./films/huichuang-nb015-teak-film.md"
   },
   {
-    "rank": 15,
+    "rank": 16,
     "name": "WiseWood Teak Flat Cut",
     "brand": "WiseWood",
     "code": "—",
@@ -330,7 +352,7 @@
     "file": "./films/wisewood-teak-flat-cut-film.md"
   },
   {
-    "rank": 16,
+    "rank": 17,
     "name": "Huichuang Oak (Flat Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015-1",
@@ -352,7 +374,7 @@
     "file": "./films/huichuang-nb015-1-oak-film.md"
   },
   {
-    "rank": 17,
+    "rank": 18,
     "name": "Shaohua Carter Oak (Character Flat)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "WN1502-3",
@@ -374,7 +396,7 @@
     "file": "./films/shaohua-wn1502-3-carter-oak-film.md"
   },
   {
-    "rank": 18,
+    "rank": 19,
     "name": "Huichuang Figured (Fiddle-back, Dark)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-1",
@@ -396,7 +418,7 @@
     "file": "./films/huichuang-nb018-1-figured-film.md"
   },
   {
-    "rank": 19,
+    "rank": 20,
     "name": "Huichuang Figured Hardwood",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-3",
@@ -418,7 +440,7 @@
     "file": "./films/huichuang-nb018-3-figured-film.md"
   },
   {
-    "rank": 20,
+    "rank": 21,
     "name": "ART DECOR Iroko",
     "brand": "ART DECOR Italian Style",
     "code": "HY9T76330-4",
@@ -440,7 +462,7 @@
     "file": "./films/artdecor-hy9t763304-iroko-film.md"
   },
   {
-    "rank": 21,
+    "rank": 22,
     "name": "Huichuang Ash (Light Cream)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018",
@@ -462,7 +484,7 @@
     "file": "./films/huichuang-nb018-ash-film.md"
   },
   {
-    "rank": 22,
+    "rank": 23,
     "name": "Shaohua Mongolian Pine (Flat Cut)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "M7006-1",
@@ -484,7 +506,7 @@
     "file": "./films/shaohua-m7006-1-pine-film.md"
   },
   {
-    "rank": 23,
+    "rank": 24,
     "name": "WiseWood Lacewood",
     "brand": "WiseWood",
     "code": "—",
