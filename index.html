@@ -363,6 +363,37 @@
       .table-wrap { padding: 24px 20px 60px; }
       :root { --drawer-w: 100vw; }
       .hide-sm { display: none; }
+      /* Sub-filter row: pills scroll, search stays pinned right */
+      .subfilters { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .subfilters::-webkit-scrollbar { display: none; }
+      .subfilter { flex-shrink: 0; }
+    }
+
+    @media (max-width: 540px) {
+      header { padding-top: 28px; }
+      header h1 { font-size: 20px; }
+
+      /* Tighter table padding */
+      thead th { padding: 0 8px 10px; font-size: 9px; letter-spacing: 1.2px; }
+      thead th:first-child { padding-left: 0; }
+      td { padding: 14px 8px; }
+      td:first-child { padding-left: 0; }
+
+      /* Smaller panel image */
+      .img-wrap { width: 88px; height: 60px; }
+
+      /* Hide Demand and Mimicry columns — Score pill + Tier remain */
+      table thead th:nth-child(3),
+      table thead th:nth-child(4),
+      table tbody td:nth-child(3),
+      table tbody td:nth-child(4) { display: none; }
+
+      /* Search wraps to its own row below pills */
+      .subfilters { flex-wrap: wrap; overflow-x: visible; }
+      .search-input { margin-left: 0; width: 100%; max-width: none; }
+
+      /* Drawer tables scroll horizontally */
+      .md table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     }
   </style>
 </head>
