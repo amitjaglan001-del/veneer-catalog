@@ -112,12 +112,9 @@
     .subfilter.active .sf-count { opacity: 0.75; }
 
     /* ── Search bar ─────────────────────────────────────── */
-    .search-wrap {
-      padding: 14px 52px 0;
-    }
     .search-input {
-      width: 100%;
-      max-width: 360px;
+      max-width: 220px;
+      margin-left: auto;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -361,7 +358,7 @@
 
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 860px) {
-      header, .tabs, .subfilters, .search-wrap, .criteria { padding-left: 20px; padding-right: 20px; }
+      header, .tabs, .subfilters, .criteria { padding-left: 20px; padding-right: 20px; }
       .criteria { margin-left: 20px; margin-right: 20px; }
       .table-wrap { padding: 24px 20px 60px; }
       :root { --drawer-w: 100vw; }
@@ -385,11 +382,6 @@
 
 <!-- Sub-filters (populated by JS) -->
 <div class="subfilters" id="subfilters"></div>
-
-<!-- Search -->
-<div class="search-wrap">
-  <input class="search-input" id="search-input" type="search" placeholder="Search films, species, tier…" autocomplete="off" />
-</div>
 
 <!-- Winning criteria -->
 <div class="criteria" id="criteria-box">
@@ -465,12 +457,15 @@
 
     const labels = [['all','All'],['walnut','Walnut'],['teak','Teak'],['oak','Oak'],['specialty','Specialty']];
     const container = document.getElementById('subfilters');
+    const prevQ = container.querySelector('.search-input')?.value || '';
     container.innerHTML = labels.map(([key, label]) =>
       `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label}<span class="sf-count">${counts[key]}</span></button>`
-    ).join('');
+    ).join('') +
+      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
     container.querySelectorAll('.subfilter').forEach(btn => {
       btn.addEventListener('click', () => { activeSubfilter = btn.dataset.sf; renderSubfilters(); filterRows(); });
     });
+    document.getElementById('search-input').addEventListener('input', filterRows);
   }
 
   function filterRows() {
@@ -522,8 +517,6 @@
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
     });
-
-    document.getElementById('search-input').addEventListener('input', filterRows);
 
     renderSubfilters();
   }
