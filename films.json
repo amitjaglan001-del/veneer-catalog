@@ -309,6 +309,50 @@
   },
   {
     "rank": 15,
+    "name": "Huichuang Teak (Character Flat, Knot)",
+    "brand": "Huichuang / Aesthetics",
+    "code": "NB008",
+    "species": "Teak",
+    "speciesLatin": "Tectona grandis",
+    "cut": "Flat cut — warm honey-golden with focal knot figure",
+    "finish": "Satin ~15–18% — needs reduction to 8–12%",
+    "demand": 8.8,
+    "mimicry": 6.5,
+    "score": 7.4,
+    "tier": "Strong Contender",
+    "bestSegments": "Heritage Buyers · Aspirational Professionals · Tier-2 Aspirants",
+    "bestCities": "Chennai · Ahmedabad · Delhi NCR · Hyderabad · All Tier-2",
+    "topApplication": "TV walls · Bedroom headboard · Pooja units",
+    "keyStrength": "Most persuasively natural teak in catalog — focal knot reads as real mature timber; immediate emotional resonance",
+    "keyWeakness": "Short pattern repeat (~1.5–2.5 m) due to knot; tiling visible on large surfaces without careful installation",
+    "priorityFix": "Reduce finish to 8–12% satin — undermines natural-teak appeal at 15–18%; single highest-impact change",
+    "image": "./films/images/huichuang-nb008-teak.jpg",
+    "file": "./films/huichuang-nb008-teak-film.md"
+  },
+  {
+    "rank": 16,
+    "name": "Huichuang Wenge (Fine Parallel, Near-Black)",
+    "brand": "Huichuang / Aesthetics",
+    "code": "NB007",
+    "species": "Wenge",
+    "speciesLatin": "Millettia laurentii",
+    "cut": "Fine flat cut — near-rift parallel grain, ultra-dense tan grain lines on near-black ground",
+    "finish": "Open-pore matte ~5–8% — correctly calibrated; no fix needed",
+    "demand": 7.5,
+    "mimicry": 7.4,
+    "score": 7.4,
+    "tier": "Strong Contender",
+    "bestSegments": "Design-Forward Architects · Luxury HNI · Industrial/Boutique Commercial",
+    "bestCities": "Bengaluru · Mumbai · Delhi NCR",
+    "topApplication": "TV walls · Home office · Boutique hospitality · Retail/showroom",
+    "keyStrength": "Highest grain execution score among all dark films; only accurate wenge in catalog; specification-ready finish out of box",
+    "keyWeakness": "Wenge demand is architect-led niche; no mass-market recognition; wrong species for heritage and Tier-2 buyers",
+    "priorityFix": "No finish fix needed — build Dark Contrast sample board pairing NB007 + NB016-3 + concrete grey stone",
+    "image": "./films/images/huichuang-nb007-wenge.jpg",
+    "file": "./films/huichuang-nb007-wenge-film.md"
+  },
+  {
+    "rank": 17,
     "name": "Huichuang Teak (Rift Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015",
@@ -330,7 +374,7 @@
     "file": "./films/huichuang-nb015-teak-film.md"
   },
   {
-    "rank": 16,
+    "rank": 18,
     "name": "WiseWood Teak Flat Cut",
     "brand": "WiseWood",
     "code": "—",
@@ -352,7 +396,7 @@
     "file": "./films/wisewood-teak-flat-cut-film.md"
   },
   {
-    "rank": 17,
+    "rank": 19,
     "name": "Huichuang Oak (Flat Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015-1",
@@ -374,7 +418,7 @@
     "file": "./films/huichuang-nb015-1-oak-film.md"
   },
   {
-    "rank": 18,
+    "rank": 20,
     "name": "Shaohua Carter Oak (Character Flat)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "WN1502-3",
@@ -396,7 +440,7 @@
     "file": "./films/shaohua-wn1502-3-carter-oak-film.md"
   },
   {
-    "rank": 19,
+    "rank": 21,
     "name": "Huichuang Figured (Fiddle-back, Dark)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-1",
@@ -418,7 +462,7 @@
     "file": "./films/huichuang-nb018-1-figured-film.md"
   },
   {
-    "rank": 20,
+    "rank": 22,
     "name": "Huichuang Figured Hardwood",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-3",
@@ -440,7 +484,7 @@
     "file": "./films/huichuang-nb018-3-figured-film.md"
   },
   {
-    "rank": 21,
+    "rank": 23,
     "name": "ART DECOR Iroko",
     "brand": "ART DECOR Italian Style",
     "code": "HY9T76330-4",
@@ -462,7 +506,7 @@
     "file": "./films/artdecor-hy9t763304-iroko-film.md"
   },
   {
-    "rank": 22,
+    "rank": 24,
     "name": "Huichuang Ash (Light Cream)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018",
@@ -484,7 +528,7 @@
     "file": "./films/huichuang-nb018-ash-film.md"
   },
   {
-    "rank": 23,
+    "rank": 25,
     "name": "Shaohua Mongolian Pine (Flat Cut)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "M7006-1",
@@ -506,7 +550,7 @@
     "file": "./films/shaohua-m7006-1-pine-film.md"
   },
   {
-    "rank": 24,
+    "rank": 26,
     "name": "WiseWood Lacewood",
     "brand": "WiseWood",
     "code": "—",
