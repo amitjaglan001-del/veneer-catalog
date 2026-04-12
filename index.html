@@ -111,6 +111,29 @@
     }
     .subfilter.active .sf-count { opacity: 0.75; }
 
+    /* ── Search bar ─────────────────────────────────────── */
+    .search-wrap {
+      padding: 14px 52px 0;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 360px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 9px 14px 9px 36px;
+      font-size: 13px;
+      color: var(--text);
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.15s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a8078' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--gold-dim); }
+
     /* ── Criteria banner ────────────────────────────────── */
     .criteria {
       margin: 20px 52px 0;
@@ -338,7 +361,7 @@
 
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 860px) {
-      header, .tabs, .subfilters, .criteria { padding-left: 20px; padding-right: 20px; }
+      header, .tabs, .subfilters, .search-wrap, .criteria { padding-left: 20px; padding-right: 20px; }
       .criteria { margin-left: 20px; margin-right: 20px; }
       .table-wrap { padding: 24px 20px 60px; }
       :root { --drawer-w: 100vw; }
@@ -362,6 +385,11 @@
 
 <!-- Sub-filters (populated by JS) -->
 <div class="subfilters" id="subfilters"></div>
+
+<!-- Search -->
+<div class="search-wrap">
+  <input class="search-input" id="search-input" type="search" placeholder="Search films, species, tier…" autocomplete="off" />
+</div>
 
 <!-- Winning criteria -->
 <div class="criteria" id="criteria-box">
@@ -446,8 +474,11 @@
   }
 
   function filterRows() {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
-      tr.style.display = (activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter) ? '' : 'none';
+      const sfMatch = activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter;
+      const textMatch = !q || tr.dataset.search.includes(q);
+      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
     });
   }
 
@@ -460,6 +491,7 @@
       const tc = tierClass(f.tier);
       const tr = document.createElement('tr');
       tr.dataset.sf = speciesGroup(f.species);
+      tr.dataset.search = [f.name, f.species, f.speciesLatin, f.code, f.tier, f.cut, f.finish].join(' ').toLowerCase();
       tr.innerHTML = `
         <td>
           <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}">
@@ -490,6 +522,8 @@
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
     });
+
+    document.getElementById('search-input').addEventListener('input', filterRows);
 
     renderSubfilters();
   }
