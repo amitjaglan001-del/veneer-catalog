@@ -23,6 +23,28 @@
   },
   {
     "rank": 2,
+    "name": "Huichuang Walnut (Clean Grain)",
+    "brand": "Huichuang / Aesthetics",
+    "code": "NB010-1",
+    "species": "European / Italian Walnut",
+    "speciesLatin": "Juglans regia",
+    "cut": "Flat cut \u2014 flowing wave, no knot",
+    "finish": "Satin ~10\u201314% \u2014 well calibrated",
+    "demand": 8.2,
+    "mimicry": 6.6,
+    "score": 7.8,
+    "tier": "Strong Contender",
+    "bestSegments": "Aspirational Professionals \u00b7 Design Millennials \u00b7 Architects",
+    "bestCities": "Mumbai \u00b7 Bengaluru \u00b7 Pune \u00b7 Hyderabad \u00b7 Delhi NCR",
+    "topApplication": "TV walls \u00b7 Large accent walls \u00b7 Wardrobes \u00b7 Bedroom headboard",
+    "keyStrength": "Best finish calibration in walnut category. Longer repeat suits large-wall briefs.",
+    "keyWeakness": "Less dramatic than NB010 \u2014 no knot figure. Heartwood-sapwood absent.",
+    "priorityFix": "EIR audit under raking light + heartwood-sapwood band",
+    "image": "./films/images/huichuang-nb010-1-walnut.jpg",
+    "file": "./films/huichuang-nb010-1-walnut-film.md"
+  },
+  {
+    "rank": 3,
     "name": "ART DECOR Walnut",
     "brand": "ART DECOR Italian Style",
     "code": "HY09176326",
@@ -44,7 +66,7 @@
     "file": "./films/artdecor-hy09176326-walnut-film.md"
   },
   {
-    "rank": 3,
+    "rank": 4,
     "name": "Aesthetic Teak Rift Cut",
     "brand": "Aesthetic",
     "code": "NB009+",
@@ -66,7 +88,7 @@
     "file": "./films/aesthetic-nb009-teak-film.md"
   },
   {
-    "rank": 4,
+    "rank": 5,
     "name": "ART DECOR Oak",
     "brand": "ART DECOR Italian Style",
     "code": "HY09162228-1",
@@ -88,7 +110,7 @@
     "file": "./films/artdecor-hy09162228-oak-film.md"
   },
   {
-    "rank": 5,
+    "rank": 6,
     "name": "WiseWood Teak Flat Cut",
     "brand": "WiseWood",
     "code": "\u2014",
@@ -110,7 +132,7 @@
     "file": "./films/wisewood-teak-flat-cut-film.md"
   },
   {
-    "rank": 6,
+    "rank": 7,
     "name": "ART DECOR Iroko",
     "brand": "ART DECOR Italian Style",
     "code": "HY9T76330-4",
@@ -132,7 +154,7 @@
     "file": "./films/artdecor-hy9t763304-iroko-film.md"
   },
   {
-    "rank": 7,
+    "rank": 8,
     "name": "WiseWood Lacewood",
     "brand": "WiseWood",
     "code": "\u2014",
