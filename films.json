@@ -23,6 +23,28 @@
   },
   {
     "rank": 2,
+    "name": "Aesthetic Teak Rift Cut",
+    "brand": "Aesthetic",
+    "code": "NB009+",
+    "species": "Teak",
+    "speciesLatin": "Tectona grandis",
+    "cut": "Rift cut — straight parallel grain",
+    "finish": "Satin ~15–20% — needs reduction",
+    "demand": 8.8,
+    "mimicry": 6.7,
+    "score": 7.5,
+    "tier": "Strong Contender",
+    "bestSegments": "Heritage Buyers · Aspirational Professionals · Tier-2 Aspirants",
+    "bestCities": "Chennai · Ahmedabad · Delhi NCR · Hyderabad · All Tier-2",
+    "topApplication": "TV walls · Wardrobes · Bedroom · Pooja units",
+    "keyStrength": "Rift cut avoids cathedral arch execution trap. Longest pattern repeat in teak category.",
+    "keyWeakness": "Finish 5–8% too high for premium channel. No heartwood-sapwood contrast.",
+    "priorityFix": "Reduce finish to 8–12% satin — single highest-impact change available",
+    "image": "./films/images/aesthetic-nb009-teak.jpg",
+    "file": "./films/aesthetic-nb009-teak-film.md"
+  },
+  {
+    "rank": 3,
     "name": "ART DECOR Oak",
     "brand": "ART DECOR Italian Style",
     "code": "HY09162228-1",
@@ -44,7 +66,7 @@
     "file": "./films/artdecor-hy09162228-oak-film.md"
   },
   {
-    "rank": 3,
+    "rank": 4,
     "name": "WiseWood Teak Flat Cut",
     "brand": "WiseWood",
     "code": "—",
@@ -66,7 +88,7 @@
     "file": "./films/wisewood-teak-flat-cut-film.md"
   },
   {
-    "rank": 4,
+    "rank": 5,
     "name": "ART DECOR Iroko",
     "brand": "ART DECOR Italian Style",
     "code": "HY9T76330-4",
@@ -88,7 +110,7 @@
     "file": "./films/artdecor-hy9t763304-iroko-film.md"
   },
   {
-    "rank": 5,
+    "rank": 6,
     "name": "WiseWood Lacewood",
     "brand": "WiseWood",
     "code": "—",
