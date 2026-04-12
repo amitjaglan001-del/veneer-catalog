@@ -77,6 +77,40 @@
     }
     .tab.locked { opacity: 0.35; cursor: default; }
 
+    /* ── Sub-filters ────────────────────────────────────── */
+    .subfilters {
+      display: flex;
+      gap: 6px;
+      padding: 16px 52px 0;
+      align-items: center;
+    }
+    .subfilter {
+      padding: 5px 13px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: transparent;
+      transition: all 0.15s;
+      font-family: var(--font);
+    }
+    .subfilter:hover { color: var(--text); border-color: var(--gold-dim); }
+    .subfilter.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+      font-weight: 500;
+    }
+    .subfilter .sf-count {
+      opacity: 0.65;
+      font-size: 10px;
+      margin-left: 3px;
+    }
+    .subfilter.active .sf-count { opacity: 0.75; }
+
     /* ── Criteria banner ────────────────────────────────── */
     .criteria {
       margin: 20px 52px 0;
@@ -304,7 +338,7 @@
 
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width: 860px) {
-      header, .tabs, .criteria { padding-left: 20px; padding-right: 20px; }
+      header, .tabs, .subfilters, .criteria { padding-left: 20px; padding-right: 20px; }
       .criteria { margin-left: 20px; margin-right: 20px; }
       .table-wrap { padding: 24px 20px 60px; }
       :root { --drawer-w: 100vw; }
@@ -321,10 +355,13 @@
 
 <!-- Category tabs -->
 <div class="tabs">
-  <button class="tab active" data-cat="veneers">Veneers</button>
+  <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
   <button class="tab locked" data-cat="murals" disabled>Murals</button>
   <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
 </div>
+
+<!-- Sub-filters (populated by JS) -->
+<div class="subfilters" id="subfilters"></div>
 
 <!-- Winning criteria -->
 <div class="criteria" id="criteria-box">
@@ -383,14 +420,46 @@
             <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 10}%"></div></div>`;
   }
 
+  // ── Sub-filters ──
+  function speciesGroup(species) {
+    if (species.includes('Walnut')) return 'walnut';
+    if (species.includes('Teak'))   return 'teak';
+    if (species.includes('Oak') && !species.includes('Lacewood') && !species.includes('Silky')) return 'oak';
+    return 'specialty';
+  }
+
+  let allFilms = [];
+  let activeSubfilter = 'all';
+
+  function renderSubfilters() {
+    const counts = { all: allFilms.length, walnut: 0, teak: 0, oak: 0, specialty: 0 };
+    allFilms.forEach(f => counts[speciesGroup(f.species)]++);
+
+    const labels = [['all','All'],['walnut','Walnut'],['teak','Teak'],['oak','Oak'],['specialty','Specialty']];
+    const container = document.getElementById('subfilters');
+    container.innerHTML = labels.map(([key, label]) =>
+      `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label}<span class="sf-count">${counts[key]}</span></button>`
+    ).join('');
+    container.querySelectorAll('.subfilter').forEach(btn => {
+      btn.addEventListener('click', () => { activeSubfilter = btn.dataset.sf; renderSubfilters(); filterRows(); });
+    });
+  }
+
+  function filterRows() {
+    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
+      tr.style.display = (activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter) ? '' : 'none';
+    });
+  }
+
   async function loadCatalog() {
-    const films = await fetch('./films.json').then(r => r.json());
+    allFilms = await fetch('./films.json').then(r => r.json());
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
 
-    films.forEach(f => {
+    allFilms.forEach(f => {
       const tc = tierClass(f.tier);
       const tr = document.createElement('tr');
+      tr.dataset.sf = speciesGroup(f.species);
       tr.innerHTML = `
         <td>
           <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}">
@@ -412,11 +481,17 @@
       tbody.appendChild(tr);
     });
 
+    // Update Veneers tab with total count
+    const tabBtn = document.getElementById('tab-veneers');
+    tabBtn.innerHTML = `Veneers <span class="sf-count">${allFilms.length}</span>`;
+
     document.querySelectorAll('.img-wrap').forEach(el => {
       const open = () => openDrawer(el.dataset.file, el.dataset.name);
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
     });
+
+    renderSubfilters();
   }
 
   // ── Drawer ──
