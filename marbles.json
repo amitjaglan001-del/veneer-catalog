@@ -1,0 +1,25 @@
+[
+  {
+    "rank": 1,
+    "name": "Matte Fish Belly White",
+    "code": "marble-001",
+    "item": "DFX894-3",
+    "brand": "DFX",
+    "stoneReference": "Bianco Statuario — soft cloud interpretation",
+    "colourFamily": "white",
+    "finish": "Matte (亚光) — flat, non-reflective",
+    "demand": 9.5,
+    "mimicry": 7.5,
+    "score": 7.9,
+    "tier": "Premium",
+    "topApplication": "Wardrobe Shutters · Kitchen Cabinets · TV Unit · Pooja Doors",
+    "bestFor": "Modular furniture wrap — wardrobes, kitchens, vanities",
+    "bestSegments": "Aspirational Pro · Tier-2 · Design Millennials",
+    "bestCities": "Mumbai · Delhi NCR · Bengaluru · Hyderabad",
+    "keyStrength": "Pure white Statuario cloud vein, matte finish — fills Essential Slot #1 (Classic White + Grey Vein); most demanded marble film colour in India",
+    "keyWeakness": "Asymmetric vein cloud creates obvious pattern repeat across multi-door installations; flat film surface — no tactile depth",
+    "priorityFix": "Request EIR micro-emboss matte variant from supplier — adds haptic stone quality, projects score to ~85/100",
+    "image": "./marbles/images/marble-001-dfx894-3-matte-fish-belly-white.jpg",
+    "file": "./marbles/marble-001-dfx894-3-matte-fish-belly-white.md"
+  }
+]

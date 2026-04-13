@@ -513,6 +513,7 @@
 <div class="tabs">
   <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
   <button class="tab" data-cat="stones" id="tab-stones">Stone Panels</button>
+  <button class="tab" data-cat="marble" id="tab-marble">Marble Films</button>
   <button class="tab locked" data-cat="murals" disabled>Murals</button>
   <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
 </div>
@@ -595,6 +596,7 @@
   const CRITERIA = {
     veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight; a misread tone or wrong figure instantly reads as imitation. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. EIR pore registration (emboss aligned to grain lines) is the threshold between a trade-channel product and a specification-grade product. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
     stones: `A top-performing stone panel is scored out of 10 across two exposed dimensions — Demand (market pull for that stone type in urban India) and Mimicry (design fidelity to the natural stone reference) — plus a composite score weighing 7 criteria: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
+    marble: `Marble Films are decorative PVC/PET surface wrap films used on modular furniture, wardrobes, kitchen cabinets, and vanity fronts. Scored on the same 7-dimension framework as stone panels: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Key evaluation criteria specific to films: pattern repeat length (critical for multi-door installations), EIR emboss depth for haptic quality, and matte/gloss finish calibration. Matte white marble films are the #1 demanded decorative surface in Indian modular furniture (2024–27).`,
     murals: `Coming soon.`,
     limewash: `Coming soon.`,
   };
@@ -827,6 +829,94 @@
     renderStoneSubfilters();
   }
 
+  // ── Marble sub-filters ──
+  let allMarbles = [];
+  let activeMarbleSubfilter = 'all';
+
+  function renderMarbleSubfilters() {
+    const counts = { all: allMarbles.length, white: 0, grey: 0, beige: 0, dark: 0, special: 0 };
+    allMarbles.forEach(m => counts[colourGroup(m.colourFamily)]++);
+
+    const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
+    const container = document.getElementById('subfilters');
+    const prevQ = container.querySelector('.search-input')?.value || '';
+    container.innerHTML = labels.map(([key, label]) =>
+      `<button class="subfilter${activeMarbleSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
+    ).join('') +
+      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
+    container.querySelectorAll('.subfilter').forEach(btn => {
+      btn.addEventListener('click', () => { activeMarbleSubfilter = btn.dataset.sf; renderMarbleSubfilters(); filterMarbleRows(); });
+    });
+    document.getElementById('search-input').addEventListener('input', filterMarbleRows);
+  }
+
+  function filterMarbleRows() {
+    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
+    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
+      const sfMatch = activeMarbleSubfilter === 'all' || tr.dataset.sf === activeMarbleSubfilter;
+      const textMatch = !q || tr.dataset.search.includes(q);
+      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
+    });
+  }
+
+  // ── Load marble catalog ──
+  async function loadMarbles() {
+    allMarbles = await fetch('./marbles.json').then(r => r.json());
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+
+    document.getElementById('thead').innerHTML = `<tr>
+      <th>Panel</th>
+      <th>Film</th>
+      <th>Demand</th>
+      <th>Mimicry</th>
+      <th class="hide-sm">Finish</th>
+      <th class="hide-sm">Best For</th>
+      <th>Score</th>
+      <th>Tier</th>
+    </tr>`;
+
+    allMarbles.forEach(m => {
+      const tc = tierClassStone(m.tier);
+      const tr = document.createElement('tr');
+      tr.dataset.sf = colourGroup(m.colourFamily);
+      tr.dataset.search = [m.name, m.item, m.stoneReference, m.code, m.colourFamily, m.tier, m.finish, m.keyStrength].join(' ').toLowerCase();
+      tr.innerHTML = `
+        <td>
+          <div class="img-wrap" role="button" tabindex="0" data-file="${m.file}" data-name="${m.name}" data-image="${m.image}">
+            <img src="${m.image}" alt="${m.name}" loading="lazy" />
+            <div class="img-overlay"><span>View Report ↗</span></div>
+            <button class="enlarge-btn" data-src="${m.image}" data-alt="${m.name}" title="Enlarge">${ENLARGE_ICON}</button>
+          </div>
+        </td>
+        <td class="name-cell">
+          <div class="film-name">${m.name}</div>
+          <div class="film-sub">${m.item} · ${m.brand}<br><i>${m.stoneReference}</i></div>
+        </td>
+        <td class="score-col">${bar(m.demand, 'bar-demand')}</td>
+        <td class="score-col">${bar(m.mimicry, 'bar-mimicry')}</td>
+        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${m.finish}</td>
+        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${m.bestFor}</td>
+        <td><div class="score-pill ${tc}">${m.score.toFixed(1)}</div></td>
+        <td><span class="tier-badge ${tc}">${m.tier}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('tab-marble').innerHTML = `Marble Films <span class="sf-count">(${allMarbles.length})</span>`;
+
+    document.querySelectorAll('.img-wrap').forEach(el => {
+      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', e => e.key === 'Enter' && open());
+    });
+    document.querySelectorAll('.enlarge-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
+    });
+
+    renderMarbleSubfilters();
+  }
+
   // ── Drawer ──
   const drawer   = document.getElementById('drawer');
   const backdrop = document.getElementById('backdrop');
@@ -878,6 +968,9 @@
     } else if (cat === 'stones') {
       activeStoneSubfilter = 'all';
       loadStones();
+    } else if (cat === 'marble') {
+      activeMarbleSubfilter = 'all';
+      loadMarbles();
     }
   }
 
