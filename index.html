@@ -505,8 +505,8 @@
 <body>
 
 <header>
-  <div class="eyebrow">Urban India · 2025</div>
-  <h1>Surface Catalog</h1>
+  <div class="eyebrow">Urban Company</div>
+  <h1>Revamp Assortment Exercise</h1>
 </header>
 
 <!-- Category tabs -->
@@ -708,7 +708,7 @@
 
   // ── Load veneer catalog ──
   async function loadCatalog() {
-    allFilms = await fetch('./films.json').then(r => r.json());
+    allFilms = (await fetch('./films.json').then(r => r.json())).sort((a, b) => b.score - a.score);
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
 
@@ -768,7 +768,7 @@
 
   // ── Load stone catalog ──
   async function loadStones() {
-    allStones = await fetch('./stones.json').then(r => r.json());
+    allStones = (await fetch('./stones.json').then(r => r.json())).sort((a, b) => b.score - a.score);
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
 
@@ -861,7 +861,7 @@
 
   // ── Load marble catalog ──
   async function loadMarbles() {
-    allMarbles = await fetch('./marbles.json').then(r => r.json());
+    allMarbles = (await fetch('./marbles.json').then(r => r.json())).sort((a, b) => b.score - a.score);
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
 
@@ -979,6 +979,17 @@
   });
 
   // ── Boot ──
+  // Pre-load counts for all tabs so numbers are visible from the start
+  Promise.all([
+    fetch('./films.json').then(r => r.json()).catch(() => []),
+    fetch('./stones.json').then(r => r.json()).catch(() => []),
+    fetch('./marbles.json').then(r => r.json()).catch(() => []),
+  ]).then(([films, stones, marbles]) => {
+    document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${films.length})</span>`;
+    document.getElementById('tab-stones').innerHTML  = `Stone Panels <span class="sf-count">(${stones.length})</span>`;
+    document.getElementById('tab-marble').innerHTML  = `Marble Films <span class="sf-count">(${marbles.length})</span>`;
+  });
+
   setTab('veneers');
 </script>
 </body>
