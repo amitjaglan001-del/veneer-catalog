@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Surface Film Catalog — Urban India 2025</title>
+  <title>Surface Catalog — Urban India 2025</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -401,12 +401,13 @@
 
 <header>
   <div class="eyebrow">Urban India · 2025</div>
-  <h1>Surface Film Catalog</h1>
+  <h1>Surface Catalog</h1>
 </header>
 
 <!-- Category tabs -->
 <div class="tabs">
   <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
+  <button class="tab" data-cat="stones" id="tab-stones">Stone Panels</button>
   <button class="tab locked" data-cat="murals" disabled>Murals</button>
   <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
 </div>
@@ -423,7 +424,7 @@
 <!-- Table -->
 <div class="table-wrap">
   <table>
-    <thead>
+    <thead id="thead">
       <tr>
         <th>Panel</th>
         <th>Film</th>
@@ -456,22 +457,39 @@
 <script>
   const CRITERIA = {
     veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight; a misread tone or wrong figure instantly reads as imitation. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. EIR pore registration (emboss aligned to grain lines) is the threshold between a trade-channel product and a specification-grade product. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
+    stones: `A top-performing stone panel must excel across 7 weighted dimensions: Design Fidelity to the natural stone reference (25%), Colour-Palette Fit for Indian urban taste (20%), Veining Drama & Naturalism (18%), Surface Finish Quality (12%), Application Versatility (10%), Tactile/Embossed Texture (8%), and Trend Alignment 2024–2027 (7%). Composite score = Σ(D × W) / 5 out of 100. Ultra-Premium (80+) requires authentic dual-layer vein complexity, correct finish calibration, and strong urban trend alignment. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
     murals: `Coming soon.`,
     limewash: `Coming soon.`,
   };
 
+  // ── Tier class helpers ──
   function tierClass(tier) {
     if (tier.includes('Strong')) return 't-strong';
     if (tier.includes('Niche'))  return 't-niche';
     return 't-low';
   }
 
+  function tierClassStone(tier) {
+    if (tier === 'Ultra-Premium') return 't-strong';
+    if (tier === 'Premium')       return 't-strong';
+    if (tier === 'Mid-Premium')   return 't-niche';
+    if (tier === 'Value')         return 't-low';
+    return 't-low';
+  }
+
+  // ── Score bar helpers ──
   function bar(score, cls) {
     return `<div class="score-num">${score.toFixed(1)}</div>
             <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 10}%"></div></div>`;
   }
 
-  // ── Sub-filters ──
+  function barD(score, cls) {
+    // Stone dimension score out of 5
+    return `<div class="score-num">${score}/5</div>
+            <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 20}%"></div></div>`;
+  }
+
+  // ── Veneer sub-filters ──
   function speciesGroup(species) {
     if (species.includes('Walnut')) return 'walnut';
     if (species.includes('Teak'))   return 'teak';
@@ -500,7 +518,7 @@
   }
 
   function filterRows() {
-    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
       const sfMatch = activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter;
       const textMatch = !q || tr.dataset.search.includes(q);
@@ -508,10 +526,62 @@
     });
   }
 
+  // ── Stone sub-filters ──
+  function colourGroup(colourFamily) {
+    const c = (colourFamily || '').toLowerCase();
+    if (c === 'white' || c === 'off-white') return 'white';
+    if (c === 'grey' || c === 'gray')       return 'grey';
+    if (c === 'beige' || c === 'cream' || c === 'warm') return 'beige';
+    if (c === 'dark' || c === 'black' || c === 'charcoal') return 'dark';
+    return 'special';
+  }
+
+  let allStones = [];
+  let activeStoneSubfilter = 'all';
+
+  function renderStoneSubfilters() {
+    const counts = { all: allStones.length, white: 0, grey: 0, beige: 0, dark: 0, special: 0 };
+    allStones.forEach(s => counts[colourGroup(s.colourFamily)]++);
+
+    const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
+    const container = document.getElementById('subfilters');
+    const prevQ = container.querySelector('.search-input')?.value || '';
+    container.innerHTML = labels.map(([key, label]) =>
+      `<button class="subfilter${activeStoneSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
+    ).join('') +
+      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
+    container.querySelectorAll('.subfilter').forEach(btn => {
+      btn.addEventListener('click', () => { activeStoneSubfilter = btn.dataset.sf; renderStoneSubfilters(); filterStoneRows(); });
+    });
+    document.getElementById('search-input').addEventListener('input', filterStoneRows);
+  }
+
+  function filterStoneRows() {
+    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
+    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
+      const sfMatch = activeStoneSubfilter === 'all' || tr.dataset.sf === activeStoneSubfilter;
+      const textMatch = !q || tr.dataset.search.includes(q);
+      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
+    });
+  }
+
+  // ── Load veneer catalog ──
   async function loadCatalog() {
     allFilms = await fetch('./films.json').then(r => r.json());
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
+
+    // Set veneer thead
+    document.getElementById('thead').innerHTML = `<tr>
+      <th>Panel</th>
+      <th>Film</th>
+      <th>Demand</th>
+      <th>Mimicry</th>
+      <th class="hide-sm">Finish</th>
+      <th class="hide-sm">Best For</th>
+      <th>Score</th>
+      <th>Tier</th>
+    </tr>`;
 
     allFilms.forEach(f => {
       const tc = tierClass(f.tier);
@@ -540,8 +610,7 @@
     });
 
     // Update Veneers tab with total count
-    const tabBtn = document.getElementById('tab-veneers');
-    tabBtn.innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
+    document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
 
     document.querySelectorAll('.img-wrap').forEach(el => {
       const open = () => openDrawer(el.dataset.file, el.dataset.name);
@@ -550,6 +619,62 @@
     });
 
     renderSubfilters();
+  }
+
+  // ── Load stone catalog ──
+  async function loadStones() {
+    allStones = await fetch('./stones.json').then(r => r.json());
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+
+    // Set stone thead
+    document.getElementById('thead').innerHTML = `<tr>
+      <th>Panel</th>
+      <th>Stone</th>
+      <th>Fidelity</th>
+      <th>Veining</th>
+      <th class="hide-sm">Finish</th>
+      <th class="hide-sm">Best For</th>
+      <th>Score</th>
+      <th>Tier</th>
+    </tr>`;
+
+    allStones.forEach(s => {
+      const tc = tierClassStone(s.tier);
+      const tr = document.createElement('tr');
+      tr.dataset.sf = colourGroup(s.colourFamily);
+      tr.dataset.search = [s.name, s.stoneReference, s.code, s.colourFamily, s.tier, s.finish, s.keyStrength].join(' ').toLowerCase();
+      tr.innerHTML = `
+        <td>
+          <div class="img-wrap" role="button" tabindex="0" data-file="${s.file}" data-name="${s.name}">
+            <img src="${s.image}" alt="${s.name}" loading="lazy" />
+            <div class="img-overlay"><span>View Report ↗</span></div>
+          </div>
+        </td>
+        <td class="name-cell">
+          <div class="film-name">${s.name}</div>
+          <div class="film-sub">${s.code}<br><i>${s.stoneReference}</i></div>
+        </td>
+        <td class="score-col">${barD(s.d1Fidelity, 'bar-demand')}</td>
+        <td class="score-col">${barD(s.d3Veining, 'bar-mimicry')}</td>
+        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${s.finish}</td>
+        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${s.bestFor.replace(/·/g, '<br>')}</td>
+        <td><div class="score-pill ${tc}" style="font-size:13px;width:52px;height:52px;">${s.composite}</div></td>
+        <td><span class="tier-badge ${tc}">${s.tier}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Update Stones tab with total count
+    document.getElementById('tab-stones').innerHTML = `Stone Panels <span class="sf-count">(${allStones.length})</span>`;
+
+    document.querySelectorAll('.img-wrap').forEach(el => {
+      const open = () => openDrawer(el.dataset.file, el.dataset.name);
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', e => e.key === 'Enter' && open());
+    });
+
+    renderStoneSubfilters();
   }
 
   // ── Drawer ──
@@ -581,9 +706,19 @@
   document.addEventListener('keydown', e => e.key === 'Escape' && close());
 
   // ── Tabs ──
+  let currentTab = 'veneers';
+
   function setTab(cat) {
+    currentTab = cat;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
     document.getElementById('criteria-text').textContent = CRITERIA[cat] || '';
+    if (cat === 'veneers') {
+      activeSubfilter = 'all';
+      loadCatalog();
+    } else if (cat === 'stones') {
+      activeStoneSubfilter = 'all';
+      loadStones();
+    }
   }
 
   document.querySelectorAll('.tab:not(.locked)').forEach(t => {
@@ -592,7 +727,6 @@
 
   // ── Boot ──
   setTab('veneers');
-  loadCatalog();
 </script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+[
+  {
+    "rank": 1,
+    "name": "Silver Grey Marble — Bold White & Dark Fissure",
+    "code": "stone-001",
+    "brand": "Unknown",
+    "stoneReference": "Bardiglio / Silver Grey / Tundra Grey type",
+    "colourFamily": "grey",
+    "finish": "High gloss shown · honed variant recommended",
+    "d1Fidelity": 4,
+    "d2Colour": 4,
+    "d3Veining": 4,
+    "d4Finish": 4,
+    "d5Versatility": 4,
+    "d6Texture": 3,
+    "d7Trend": 4,
+    "composite": 78,
+    "tier": "Premium",
+    "topApplication": "TV / Feature Wall · Foyer · Bedroom",
+    "bestFor": "Feature walls · TV walls · Foyer",
+    "bestSegments": "Aspirational Pro · Design Millennials",
+    "bestCities": "Bengaluru · Mumbai · Pune",
+    "keyStrength": "Rare dual-vein system — bold white branches + dark hairline fissure network — delivers depth no single-vein grey panel can match",
+    "keyWeakness": "Cool tone limits North India / Tier-2 appeal; no honed variant confirmed",
+    "priorityFix": "Develop honed / matte finish variant to capture fast-growing Japandi + luxury segment",
+    "image": "./stones/images/stone-001-silver-grey-marble.jpg",
+    "file": "./stones/stone-001-silver-grey-marble.md"
+  }
+]
