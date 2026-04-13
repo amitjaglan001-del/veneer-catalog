@@ -39,13 +39,14 @@ Any complete India-facing stone panel collection needs these 5 core SKUs:
 | 4 | stone-012 | Warm Greige — Dual Vein with Copper Hairlines | Diana Royal / Fior di Pesco Carnico | **78** | Premium | Copper Bridge Supp. | 2026-04-13 |
 | 4 | stone-001 | Silver Grey Marble — Bold White & Dark Fissure | Bardiglio / Silver Grey / Tundra Grey | **78** | Premium | #3 Light Grey Marble | 2026-04-13 |
 | 5 | stone-007 | Light Grey Travertine — Multi-Vein Large Slab | Silver Travertine / Grigio Noce | **76** | Premium | Supplementary Grey | 2026-04-13 |
-| 6 | stone-004 | London Grey Dark — Bold White Vein | Nero Marquina / Grigio Scuro | **72** | Premium | #5 Dark/Charcoal | 2026-04-13 |
-| 6 | stone-006 | Light Blue-Grey — Single Crack Vein | Bianca Perla / Silver Cloud | **72** | Premium | Japandi Supplementary | 2026-04-13 |
-| 8 | stone-002 | Cream Marble — CE Effect | Crema Marfil / Bottichino / Katni | **67** | Premium | #4 Entry Warm Cream | 2026-04-13 |
-| 9 | stone-013 | Grey Fossil Limestone — Ceppo di Gré Type | Ceppo di Gré / Grigio Ceppo | **68** | Premium | Geological Sig. Supp. | 2026-04-13 |
-| 10 | stone-005 | Grey Taupe — Warm Grey Single Vein | Fior di Bosco / Gris du Midi | **64** | Mid-Premium | Greige Bridge Supp. | 2026-04-13 |
-| 9 | stone-010 | SY20 Pink-Beige Textured Stone | Pink Limestone / Dholpur Sandstone | **64** | Mid-Premium | Heritage Accent Supp. | 2026-04-13 |
-| 11 | stone-003 | Classical Rock — Rough Textured White | Quartzite Rock Face / Cleft Stone | **58** | Mid-Premium | Biophilic Accent Supp. | 2026-04-13 |
+| 7 | stone-004 | London Grey Dark — Bold White Vein | Nero Marquina / Grigio Scuro | **72** | Premium | #5 Dark/Charcoal | 2026-04-13 |
+| 7 | stone-006 | Light Blue-Grey — Single Crack Vein | Bianca Perla / Silver Cloud | **72** | Premium | Japandi Supplementary | 2026-04-13 |
+| 7 | stone-014 | DXC010-5 Natural Cave Travertine (天然洞石4) | Cross-cut Travertine / Travertino Bucciato | **72** | Premium | Cave-Stone Supp. | 2026-04-13 |
+| 10 | stone-013 | Grey Fossil Limestone — Ceppo di Gré Type | Ceppo di Gré / Grigio Ceppo | **68** | Premium | Geological Sig. Supp. | 2026-04-13 |
+| 11 | stone-002 | Cream Marble — CE Effect | Crema Marfil / Bottichino / Katni | **67** | Premium | #4 Entry Warm Cream | 2026-04-13 |
+| 12 | stone-005 | Grey Taupe — Warm Grey Single Vein | Fior di Bosco / Gris du Midi | **64** | Mid-Premium | Greige Bridge Supp. | 2026-04-13 |
+| 12 | stone-010 | SY20 Pink-Beige Textured Stone | Pink Limestone / Dholpur Sandstone | **64** | Mid-Premium | Heritage Accent Supp. | 2026-04-13 |
+| 14 | stone-003 | Classical Rock — Rough Textured White | Quartzite Rock Face / Cleft Stone | **58** | Mid-Premium | Biophilic Accent Supp. | 2026-04-13 |
 
 ---
 

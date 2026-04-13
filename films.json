@@ -1,6 +1,28 @@
 [
   {
     "rank": 1,
+    "name": "Shaohua Whisper Walnut (Rift, Open Pore)",
+    "brand": "Shaohua (韶华) / Aesthetics",
+    "code": "WN1511-5",
+    "species": "American / European Walnut",
+    "speciesLatin": "Juglans nigra / regia",
+    "cut": "Rift cut — straight grain with subtle organic figure, visible open pore",
+    "finish": "Open-pore satin ~8–12% — best pore rendering in walnut category",
+    "demand": 8.2,
+    "mimicry": 7.1,
+    "score": 7.9,
+    "tier": "Strong Contender",
+    "bestSegments": "Aspirational Professionals · Design Millennials · Architects",
+    "bestCities": "Mumbai · Bengaluru · Pune · Hyderabad · Delhi NCR",
+    "topApplication": "TV walls · Bedroom headboard · Wardrobes · Home office · Kitchen cabinets",
+    "keyStrength": "Best pore rendering in walnut category — visible open pores add tactile authenticity. Rift grain + open pore = peak trend alignment.",
+    "keyWeakness": "Rift cut less recognisable than cathedral for mass market. EIR status unconfirmed — needs raking light audit.",
+    "priorityFix": "Confirm EIR under raking light — if genuine emboss, prioritise for sample boards. If printed-only, request EIR variant → projected 8.2–8.4",
+    "image": "./films/images/shaohua-wn1511-5-whisper-walnut.jpg",
+    "file": "./films/shaohua-wn1511-5-whisper-walnut-film.md"
+  },
+  {
+    "rank": 2,
     "name": "Huichuang Dark Walnut (Rift)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB016-3",
@@ -22,7 +44,29 @@
     "file": "./films/huichuang-nb016-3-walnut-film.md"
   },
   {
-    "rank": 2,
+    "rank": 3,
+    "name": "Shaohua Mountain Walnut (Cathedral)",
+    "brand": "Shaohua (韶华) / Aesthetics",
+    "code": "WN1508-6",
+    "species": "European Walnut",
+    "speciesLatin": "Juglans regia",
+    "cut": "Flat cut — cathedral/crown arch figure with flowing curves",
+    "finish": "Satin ~12–16% — stain & scratch resistant series",
+    "demand": 8.2,
+    "mimicry": 6.9,
+    "score": 7.8,
+    "tier": "Strong Contender",
+    "bestSegments": "Aspirational Professionals · Tier-2 Aspirants · Heritage Buyers",
+    "bestCities": "Mumbai · Delhi NCR · Hyderabad · Pune · Ahmedabad",
+    "topApplication": "TV walls · Bedroom headboard · Wardrobes · Foyer · Pooja",
+    "keyStrength": "Cathedral arch figure maximises walnut recognition. Dead-centre chocolate-brown tone. Stain/scratch resistant adds practical durability.",
+    "keyWeakness": "No visible EIR — surface flat. Lacks heartwood-sapwood contrast. Finish slightly high.",
+    "priorityFix": "Request EIR open-pore matte variant (~8–12%) with heartwood-sapwood band → projected 8.1–8.3",
+    "image": "./films/images/shaohua-wn1508-6-mountain-walnut.jpg",
+    "file": "./films/shaohua-wn1508-6-mountain-walnut-film.md"
+  },
+  {
+    "rank": 4,
     "name": "Huichuang Walnut (Italian, Knot)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB010",
@@ -44,7 +88,7 @@
     "file": "./films/huichuang-nb010-walnut-film.md"
   },
   {
-    "rank": 3,
+    "rank": 5,
     "name": "Huichuang Walnut (Clean Grain)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB010-1",
@@ -66,7 +110,7 @@
     "file": "./films/huichuang-nb010-1-walnut-film.md"
   },
   {
-    "rank": 4,
+    "rank": 6,
     "name": "Huichuang Walnut (Rich Dark)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB010-4",
@@ -88,7 +132,7 @@
     "file": "./films/huichuang-nb010-4-walnut-film.md"
   },
   {
-    "rank": 5,
+    "rank": 7,
     "name": "Huichuang Walnut (Character Figure)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB010-3",
@@ -110,7 +154,7 @@
     "file": "./films/huichuang-nb010-3-walnut-film.md"
   },
   {
-    "rank": 6,
+    "rank": 8,
     "name": "Huichuang Walnut (Dark Rich)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB011-1",
@@ -132,7 +176,7 @@
     "file": "./films/huichuang-nb011-1-walnut-film.md"
   },
   {
-    "rank": 7,
+    "rank": 9,
     "name": "ART DECOR Walnut",
     "brand": "ART DECOR Italian Style",
     "code": "HY09176326",
@@ -154,7 +198,7 @@
     "file": "./films/artdecor-hy09176326-walnut-film.md"
   },
   {
-    "rank": 8,
+    "rank": 10,
     "name": "Huichuang Walnut (Standard)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB011",
@@ -176,7 +220,7 @@
     "file": "./films/huichuang-nb011-walnut-film.md"
   },
   {
-    "rank": 9,
+    "rank": 11,
     "name": "Aesthetic Teak Rift Cut",
     "brand": "Aesthetic",
     "code": "NB009+",
@@ -198,7 +242,7 @@
     "file": "./films/aesthetic-nb009-teak-film.md"
   },
   {
-    "rank": 10,
+    "rank": 12,
     "name": "ART DECOR Oak",
     "brand": "ART DECOR Italian Style",
     "code": "HY09162228-1",
@@ -220,7 +264,7 @@
     "file": "./films/artdecor-hy09162228-oak-film.md"
   },
   {
-    "rank": 11,
+    "rank": 13,
     "name": "Huichuang Oak (Flat Cut)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB003",
@@ -242,7 +286,7 @@
     "file": "./films/huichuang-nb003-oak-film.md"
   },
   {
-    "rank": 12,
+    "rank": 14,
     "name": "Huichuang Teak (Flat Cut, Rich)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB016",
@@ -264,7 +308,7 @@
     "file": "./films/huichuang-nb016-teak-film.md"
   },
   {
-    "rank": 13,
+    "rank": 15,
     "name": "Shaohua Faded Walnut (Rift-Fine)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "WN1517-3",
@@ -286,7 +330,7 @@
     "file": "./films/shaohua-wn1517-3-faded-walnut-film.md"
   },
   {
-    "rank": 14,
+    "rank": 16,
     "name": "Huichuang Teak (Flat Cut, Character)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB009-1",
@@ -308,7 +352,7 @@
     "file": "./films/huichuang-nb009-1-teak-film.md"
   },
   {
-    "rank": 15,
+    "rank": 17,
     "name": "Huichuang Teak (Character Flat, Knot)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB008",
@@ -330,7 +374,7 @@
     "file": "./films/huichuang-nb008-teak-film.md"
   },
   {
-    "rank": 16,
+    "rank": 18,
     "name": "Huichuang Wenge (Fine Parallel, Near-Black)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB007",
@@ -352,7 +396,7 @@
     "file": "./films/huichuang-nb007-wenge-film.md"
   },
   {
-    "rank": 17,
+    "rank": 19,
     "name": "Huichuang Teak (Rift Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015",
@@ -374,7 +418,7 @@
     "file": "./films/huichuang-nb015-teak-film.md"
   },
   {
-    "rank": 18,
+    "rank": 20,
     "name": "WiseWood Teak Flat Cut",
     "brand": "WiseWood",
     "code": "—",
@@ -396,7 +440,7 @@
     "file": "./films/wisewood-teak-flat-cut-film.md"
   },
   {
-    "rank": 19,
+    "rank": 21,
     "name": "Huichuang Oak (Flat Cut, Light)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB015-1",
@@ -418,7 +462,51 @@
     "file": "./films/huichuang-nb015-1-oak-film.md"
   },
   {
-    "rank": 20,
+    "rank": 22,
+    "name": "INTCO Decor Brushed Oak WPC Panel",
+    "brand": "INTCO Decor (英科装饰)",
+    "code": "JF6008-XGW-WZ07",
+    "species": "European Oak (wire-brushed)",
+    "speciesLatin": "Quercus robur",
+    "cut": "Rift cut — tight vertical parallel grain with EIR wire-brush texture",
+    "finish": "Brushed / EIR matte ~5–8% — pronounced physical texture",
+    "demand": 7.0,
+    "mimicry": 7.5,
+    "score": 7.2,
+    "tier": "Strong Contender",
+    "bestSegments": "Aspirational Professionals · Design Millennials · Architects",
+    "bestCities": "Mumbai · Bengaluru · Delhi NCR · Pune · Hyderabad",
+    "topApplication": "TV walls · Bedroom headboard · Foyer · Home office · Dining accent",
+    "keyStrength": "Most tactilely authentic wood surface in catalog — visible EIR embossing creates genuine wire-brushed feel. WPC substrate handles monsoon humidity better than MDF.",
+    "keyWeakness": "Wood-grain WPC panels are newer category in India than stone-look. Tone slightly generic — between oak and walnut territory.",
+    "priorityFix": "Develop lighter Japandi variant (blonde-greige) with same EIR texture → projected 7.5–7.8 for design segment",
+    "image": "./films/images/intco-jf6008-xgw-wz07-brushed-oak-wpc.jpg",
+    "file": "./films/intco-jf6008-xgw-wz07-brushed-oak-wpc-film.md"
+  },
+  {
+    "rank": 23,
+    "name": "Light Oak Greige (Japandi)",
+    "brand": "Unknown",
+    "code": "Unknown",
+    "species": "European Oak",
+    "speciesLatin": "Quercus robur",
+    "cut": "Flat cut — very subtle cathedral arch, near-straight, ultra-clean",
+    "finish": "Satin ~10–15% — needs reduction to open-pore matte for full Japandi alignment",
+    "demand": 7.2,
+    "mimicry": 7.0,
+    "score": 7.1,
+    "tier": "Strong Contender",
+    "bestSegments": "Design-Forward Millennials · Aspirational Professionals (Japandi)",
+    "bestCities": "Bengaluru · Pune · Mumbai",
+    "topApplication": "Kitchen cabinets · Bedroom headboard · Wardrobes · Home office",
+    "keyStrength": "Purest Japandi oak in catalog — clean, quiet, light-greige. 9/10 with Bengaluru millennials. Product the design segment actively searches for.",
+    "keyWeakness": "Too light for mainstream India (3/10 with heritage/Tier-2). Demand ceiling structurally below walnut/teak. No visible EIR.",
+    "priorityFix": "Source product code. Confirm EIR under raking light. Request open-pore matte variant (~5–8%) → projected 7.4–7.6",
+    "image": "./films/images/unknown-light-oak-greige.jpg",
+    "file": "./films/unknown-light-oak-greige-film.md"
+  },
+  {
+    "rank": 24,
     "name": "Shaohua Carter Oak (Character Flat)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "WN1502-3",
@@ -434,13 +522,13 @@
     "bestCities": "Mumbai · Bengaluru · Delhi NCR",
     "topApplication": "TV walls · Feature accent panels · Luxury headboards",
     "keyStrength": "Dark-warm character grain bridging oak and walnut aesthetics; stain/scratch resistant series",
-    "keyWeakness": "Zero India recognition as ‘Carter Oak’; finish too high for spec-grade oak",
-    "priorityFix": "Label as ‘Dark Smoked Oak’; reduce finish to 8–12%; lead with durability story",
+    "keyWeakness": "Zero India recognition as 'Carter Oak'; finish too high for spec-grade oak",
+    "priorityFix": "Label as 'Dark Smoked Oak'; reduce finish to 8–12%; lead with durability story",
     "image": "./films/images/shaohua-wn1502-3-oak.jpg",
     "file": "./films/shaohua-wn1502-3-carter-oak-film.md"
   },
   {
-    "rank": 21,
+    "rank": 25,
     "name": "Huichuang Figured (Fiddle-back, Dark)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-1",
@@ -462,7 +550,7 @@
     "file": "./films/huichuang-nb018-1-figured-film.md"
   },
   {
-    "rank": 22,
+    "rank": 26,
     "name": "Huichuang Figured Hardwood",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018-3",
@@ -484,7 +572,7 @@
     "file": "./films/huichuang-nb018-3-figured-film.md"
   },
   {
-    "rank": 23,
+    "rank": 27,
     "name": "ART DECOR Iroko",
     "brand": "ART DECOR Italian Style",
     "code": "HY9T76330-4",
@@ -506,7 +594,7 @@
     "file": "./films/artdecor-hy9t763304-iroko-film.md"
   },
   {
-    "rank": 24,
+    "rank": 28,
     "name": "Huichuang Ash (Light Cream)",
     "brand": "Huichuang / Aesthetics",
     "code": "NB018",
@@ -528,7 +616,7 @@
     "file": "./films/huichuang-nb018-ash-film.md"
   },
   {
-    "rank": 25,
+    "rank": 29,
     "name": "Shaohua Mongolian Pine (Flat Cut)",
     "brand": "Shaohua (韶华) / Aesthetics",
     "code": "M7006-1",
@@ -545,12 +633,12 @@
     "topApplication": "Kitchen shutters · Wardrobes (repositioned as Caramel Oak)",
     "keyStrength": "Clean fine straight grain; warm caramel tone with high repositioning potential",
     "keyWeakness": "Pine demand near-zero in India; label is a commercial liability",
-    "priorityFix": "Reposition entirely as ‘Caramel Oak’ — do not sell as pine; reduce finish to 10–12% for spec channel",
+    "priorityFix": "Reposition entirely as 'Caramel Oak' — do not sell as pine; reduce finish to 10–12% for spec channel",
     "image": "./films/images/shaohua-m7006-1-pine.jpg",
     "file": "./films/shaohua-m7006-1-pine-film.md"
   },
   {
-    "rank": 26,
+    "rank": 30,
     "name": "WiseWood Lacewood",
     "brand": "WiseWood",
     "code": "—",
