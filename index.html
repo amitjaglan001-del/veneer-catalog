@@ -18,7 +18,6 @@
       --border:    #ebebeb;
       --text:      #222222;
       --muted:     #717171;
-      --accent:    #222222;
       --green:     #008a05;
       --amber:     #c77800;
       --red:       #d93900;
@@ -27,340 +26,200 @@
       --radius:    12px;
       --radius-sm: 8px;
       --pad:       48px;
+      --nav-h:     56px;
+      --sub-h:     48px;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-    /* ── Top bar (scrollable title) ────────────────────── */
-    .topbar-title {
-      padding: 40px var(--pad) 0;
-    }
-    .eyebrow {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .topbar-title h1 {
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
+    /* ── Scrollable title ──────────────────────────────── */
+    .topbar-title { padding: 40px var(--pad) 0; }
+    .eyebrow { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 6px; }
+    .topbar-title h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
 
-    /* ── Sticky nav (tabs + search) ─────────────────────── */
+    /* ── Sticky nav ────────────────────────────────────── */
     .sticky-nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      position: sticky; top: 0; z-index: 50;
       background: var(--bg);
       border-bottom: 1px solid var(--border);
-      padding: 16px var(--pad);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 20px;
+      padding: 0 var(--pad);
+      display: flex; align-items: stretch;
+      height: var(--nav-h);
+      margin-top: 16px;
       transition: box-shadow 0.2s;
     }
-    .sticky-nav.scrolled {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
+    .sticky-nav.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
 
-    /* ── Category tabs (inside sticky nav) ──────────────── */
-    .tabs {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
+    /* ── Tabs (underline style) ─────────────────────────── */
+    .tabs { display: flex; align-items: stretch; gap: 0; }
     .tab {
-      padding: 8px 18px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      color: var(--muted);
-      background: transparent;
-      transition: all 0.2s;
-      font-family: var(--font);
-      white-space: nowrap;
+      padding: 0 20px;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; border: none;
+      color: var(--muted); background: transparent;
+      font-family: var(--font); white-space: nowrap;
+      position: relative;
+      display: flex; align-items: center;
+      transition: color 0.2s;
     }
-    .tab:hover:not(.locked) { color: var(--text); background: var(--surface); }
-    .tab.active {
-      background: var(--text);
-      color: #fff;
+    .tab::after {
+      content: ''; position: absolute; bottom: 0; left: 20px; right: 20px;
+      height: 2px; background: transparent; border-radius: 2px;
+      transition: background 0.2s;
     }
-    .tab .sf-count { font-weight: 400; opacity: 0.7; }
+    .tab:hover:not(.locked) { color: var(--text); }
+    .tab.active { color: var(--text); }
+    .tab.active::after { background: var(--text); }
+    .tab .sf-count { font-weight: 400; opacity: 0.5; margin-left: 4px; }
     .tab.locked { opacity: 0.3; cursor: default; }
 
-    /* ── Nav search bar ─────────────────────────────────── */
-    .nav-search {
-      margin-left: auto;
-      flex-shrink: 0;
-    }
+    /* ── Nav right controls ──────────────────────────────── */
+    .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
-    /* ── Sub-filters ────────────────────────────────────── */
-    .subfilters {
-      display: flex;
-      gap: 8px;
-      padding: 20px var(--pad) 0;
-      align-items: center;
+    .view-toggle {
+      display: flex; background: var(--surface); border-radius: var(--radius-sm);
+      overflow: hidden; border: 1px solid var(--border);
     }
-    .subfilter {
-      padding: 8px 16px;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      background: var(--bg);
-      transition: all 0.2s;
-      font-family: var(--font);
+    .view-btn {
+      width: 36px; height: 36px; border: none; background: transparent;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: all 0.15s; font-family: var(--font);
     }
-    .subfilter:hover { color: var(--text); border-color: var(--text); }
-    .subfilter.active {
-      background: var(--text);
-      border-color: var(--text);
-      color: #fff;
-    }
-    .subfilter .sf-count {
-      opacity: 0.6;
-      font-size: 12px;
-      font-weight: 400;
-      margin-left: 2px;
-    }
-    .subfilter.active .sf-count { opacity: 0.7; }
+    .view-btn.active { background: var(--text); color: #fff; }
+    .view-btn:hover:not(.active) { color: var(--text); }
 
-    /* ── Search bar ─────────────────────────────────────── */
     .search-input {
-      width: 220px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 10px 16px 10px 40px;
-      font-size: 14px;
-      color: var(--text);
-      font-family: var(--font);
-      outline: none;
+      width: 200px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; padding: 8px 14px 8px 36px; font-size: 14px;
+      color: var(--text); font-family: var(--font); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: 14px center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: 12px center;
     }
     .search-input::placeholder { color: var(--muted); }
     .search-input:focus { border-color: var(--text); box-shadow: 0 0 0 2px rgba(34,34,34,0.08); }
 
-    /* ── Criteria banner ────────────────────────────────── */
-    .criteria {
-      margin: 24px var(--pad) 0;
-      padding: 20px 24px;
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: none;
-    }
-    .criteria-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .criteria p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── Table ──────────────────────────────────────────── */
-    .table-wrap {
-      padding: 24px var(--pad) 80px;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead th {
-      text-align: left;
-      padding: 0 16px 14px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--muted);
+    /* ── Sticky subfilters bar ──────────────────────────── */
+    .subfilters {
+      position: sticky; top: var(--nav-h); z-index: 49;
+      background: var(--bg);
+      display: flex; gap: 8px; align-items: center;
+      padding: 10px var(--pad);
+      height: var(--sub-h);
       border-bottom: 1px solid var(--border);
-      white-space: nowrap;
     }
+    .subfilter {
+      padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--border); color: var(--muted);
+      background: var(--bg); transition: all 0.2s; font-family: var(--font);
+    }
+    .subfilter:hover { color: var(--text); border-color: var(--text); }
+    .subfilter.active { background: var(--text); border-color: var(--text); color: #fff; }
+    .subfilter .sf-count { opacity: 0.6; font-size: 12px; font-weight: 400; margin-left: 2px; }
+    .subfilter.active .sf-count { opacity: 0.7; }
+
+    /* ── Criteria ──────────────────────────────────────── */
+    .criteria { margin: 20px var(--pad) 0; padding: 20px 24px; background: var(--surface); border-radius: var(--radius); }
+    .criteria-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .criteria p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Table (list view) ─────────────────────────────── */
+    .table-wrap { padding: 24px var(--pad) 80px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { text-align: left; padding: 0 16px 14px; font-size: 12px; font-weight: 500; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
     thead th:first-child { padding-left: 0; }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
     tbody tr:hover { background: var(--surface); }
-
-    td {
-      padding: 20px 16px;
-      vertical-align: middle;
-    }
+    td { padding: 20px 16px; vertical-align: middle; }
     td:first-child { padding-left: 0; }
 
-    /* ── Image cell ─────────────────────────────────────── */
-    .img-wrap {
-      position: relative;
-      width: 160px;
-      height: 108px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
+    .img-wrap { position: relative; width: 160px; height: 108px; border-radius: var(--radius); overflow: hidden; cursor: pointer; flex-shrink: 0; }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
     .img-wrap:hover img { transform: scale(1.06); }
-    .img-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
-      display: flex;
-      align-items: flex-end;
-      padding: 12px 14px;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); display: flex; align-items: flex-end; padding: 12px 14px; opacity: 0; transition: opacity 0.2s; }
     .img-wrap:hover .img-overlay { opacity: 1; }
-    .img-overlay span {
-      font-size: 11px;
-      font-weight: 500;
-      color: #fff;
-    }
+    .img-overlay span { font-size: 11px; font-weight: 500; color: #fff; }
 
-    /* ── Name cell ──────────────────────────────────────── */
-    .name-cell .film-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.35;
-      margin-bottom: 4px;
-    }
-    .name-cell .film-sub {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .name-cell .film-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.35; margin-bottom: 4px; }
+    .name-cell .film-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
     .name-cell .film-sub i { font-style: italic; }
 
-    /* ── Score bars ─────────────────────────────────────── */
     .score-col { min-width: 100px; }
-    .score-num {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .bar-track {
-      height: 4px;
-      background: var(--surface2);
-      border-radius: 100px;
-      overflow: hidden;
-      width: 88px;
-    }
+    .score-num { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .bar-track { height: 4px; background: var(--surface2); border-radius: 100px; overflow: hidden; width: 88px; }
     .bar-fill { height: 100%; border-radius: 100px; }
     .bar-demand  { background: var(--amber); }
     .bar-mimicry { background: var(--green); }
 
-    /* ── Score pill ─────────────────────────────────────── */
-    .score-pill {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius);
-      border: 2px solid;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-    }
+    .score-pill { width: 48px; height: 48px; border-radius: var(--radius); border: 2px solid; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
     .t-strong { border-color: var(--green); color: var(--green); }
     .t-niche  { border-color: var(--amber); color: var(--amber); }
     .t-low    { border-color: var(--red);   color: var(--red); }
 
-    /* ── Tier badge ─────────────────────────────────────── */
-    .tier-badge {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-    .t-strong .tier-badge, .tier-badge.t-strong { background: rgba(0,138,5,0.08); color: var(--green); }
+    .tier-badge { font-size: 11px; font-weight: 500; padding: 6px 12px; border-radius: 100px; white-space: nowrap; }
+    .tier-badge.t-strong { background: rgba(0,138,5,0.08); color: var(--green); }
     .tier-badge.t-niche  { background: rgba(199,120,0,0.08); color: var(--amber); }
     .tier-badge.t-low    { background: rgba(217,57,0,0.08);  color: var(--red); }
 
+    .selected-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #fff; background: var(--green); border-radius: 100px; padding: 3px 10px; margin-top: 6px; }
+    .selected-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.6); flex-shrink: 0; }
+
+    .enlarge-btn { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s, background 0.15s; z-index: 2; padding: 0; }
+    .img-wrap:hover .enlarge-btn, .grid-card:hover .enlarge-btn { opacity: 1; }
+    .enlarge-btn:hover { background: rgba(0,0,0,0.65); }
+    .enlarge-btn svg { display: block; }
+
+    /* ── Grid view ─────────────────────────────────────── */
+    .grid-wrap { padding: 24px var(--pad) 80px; display: none; }
+    .grid-wrap.active { display: block; }
+    .table-wrap.active { display: block; }
+    .table-wrap:not(.active) { display: none; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px 24px; }
+
+    .grid-card { cursor: pointer; }
+    .grid-card-img {
+      position: relative; width: 100%; aspect-ratio: 4/3;
+      border-radius: var(--radius); overflow: hidden;
+      background: var(--surface);
+    }
+    .grid-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .grid-card:hover .grid-card-img img { transform: scale(1.04); }
+
+    .grid-card-img .selected-badge {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      margin: 0; font-size: 12px; padding: 5px 12px;
+      background: var(--bg); color: var(--text); font-weight: 600;
+      border-radius: 100px; box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .grid-card-img .selected-badge::before { background: var(--green); }
+
+    .grid-card-img .enlarge-btn { top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; }
+
+    .grid-card-info { padding: 12px 2px 0; }
+    .grid-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .grid-card-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.35; }
+    .grid-card-score { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; flex-shrink: 0; margin-left: 8px; }
+    .grid-card-score svg { width: 14px; height: 14px; }
+    .grid-card-sub { font-size: 14px; color: var(--muted); margin-top: 2px; }
+    .grid-card-tier { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
     /* ── Drawer ─────────────────────────────────────────── */
-    .backdrop {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 100;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s;
-    }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.25); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
     .backdrop.open { opacity: 1; pointer-events: all; }
-
-    .drawer {
-      position: fixed; top: 0; right: 0;
-      width: var(--drawer-w); max-width: 95vw;
-      height: 100vh;
-      background: var(--bg);
-      border-left: 1px solid var(--border);
-      z-index: 101;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-      display: flex; flex-direction: column;
-    }
+    .drawer { position: fixed; top: 0; right: 0; width: var(--drawer-w); max-width: 95vw; height: 100vh; background: var(--bg); border-left: 1px solid var(--border); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; }
     .drawer.open { transform: translateX(0); }
-
-    .drawer-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 28px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
     .drawer-title { font-size: 15px; font-weight: 600; color: var(--text); }
-    .close-btn {
-      background: var(--surface); border: none;
-      color: var(--text); width: 32px; height: 32px;
-      border-radius: 50%; cursor: pointer; font-size: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font);
-      transition: background 0.15s;
-    }
+    .close-btn { background: var(--surface); border: none; color: var(--text); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: background 0.15s; }
     .close-btn:hover { background: var(--surface2); }
-
-    .drawer-body {
-      flex: 1; overflow-y: auto;
-      padding: 32px 32px 60px;
-    }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 32px 32px 60px; }
     .drawer-body::-webkit-scrollbar { width: 0; }
+    .drawer-img { margin: -32px -32px 28px; height: 240px; overflow: hidden; flex-shrink: 0; }
+    .drawer-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* ── Markdown ───────────────────────────────────────── */
-    .md h1 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 16px; letter-spacing: -0.3px; }
+    .md h1 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 16px; }
     .md h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin: 32px 0 12px; }
     .md h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
     .md p  { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
@@ -371,118 +230,18 @@
     .md hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
     .md blockquote { border-left: 3px solid var(--border); padding-left: 16px; margin: 16px 0; color: var(--muted); }
     .md img { max-width: 100%; border-radius: var(--radius); margin: 12px 0; }
-    .md code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; background: var(--surface); padding: 2px 6px; border-radius: 6px; color: var(--text); }
+    .md code { font-family: 'SF Mono', monospace; font-size: 12px; background: var(--surface); padding: 2px 6px; border-radius: 6px; }
     .md table { width: 100%; border-collapse: collapse; margin: 16px 0; }
     .md th { text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 500; color: var(--muted); background: var(--surface); border-bottom: 1px solid var(--border); }
     .md td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted); }
     .md tr td:first-child { color: var(--text); font-weight: 500; }
 
-    /* ── Selected badge ─────────────────────────────────── */
-    .selected-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #fff;
-      background: var(--green);
-      border-radius: 100px;
-      padding: 3px 10px;
-      margin-top: 6px;
-    }
-    .selected-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      flex-shrink: 0;
-    }
-
-    /* ── Enlarge button ──────────────────────────────────── */
-    .enlarge-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 28px;
-      height: 28px;
-      border-radius: var(--radius-sm);
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.2s, background 0.15s;
-      z-index: 2;
-      padding: 0;
-    }
-    .img-wrap:hover .enlarge-btn { opacity: 1; }
-    .enlarge-btn:hover { background: rgba(0,0,0,0.65); }
-    .enlarge-btn svg { display: block; }
-
-    /* ── Lightbox ────────────────────────────────────────── */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .lightbox.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .lightbox img {
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: var(--radius);
-      box-shadow: 0 32px 100px rgba(0,0,0,0.5);
-    }
-    .lightbox-close {
-      position: fixed;
-      top: 20px;
-      right: 24px;
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: #fff;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font);
-      transition: background 0.15s;
-    }
+    /* ── Lightbox ───────────────────────────────────────── */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: var(--radius); box-shadow: 0 32px 100px rgba(0,0,0,0.5); }
+    .lightbox-close { position: fixed; top: 20px; right: 24px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: background 0.15s; }
     .lightbox-close:hover { background: rgba(255,255,255,0.25); }
-
-    /* ── Drawer image ───────────────────────────────────── */
-    .drawer-img {
-      margin: -32px -32px 28px;
-      height: 240px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .drawer-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
 
     .loading { text-align: center; padding: 60px 0; color: var(--muted); font-size: 14px; }
 
@@ -490,44 +249,37 @@
     @media (max-width: 860px) {
       :root { --pad: 24px; --drawer-w: 100vw; }
       .hide-sm { display: none; }
-      .sticky-nav { gap: 6px; padding: 12px var(--pad); }
-      .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .tabs { overflow-x: auto; scrollbar-width: none; }
       .tabs::-webkit-scrollbar { display: none; }
       .tab { flex-shrink: 0; }
-      .subfilters { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .subfilters { overflow-x: auto; scrollbar-width: none; }
       .subfilters::-webkit-scrollbar { display: none; }
       .subfilter { flex-shrink: 0; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px 16px; }
     }
-
     @media (max-width: 540px) {
       .topbar-title { padding-top: 28px; }
       .topbar-title h1 { font-size: 22px; }
-      .sticky-nav { flex-wrap: wrap; }
-      .nav-search { width: 100%; margin-left: 0; }
-      .nav-search .search-input { width: 100%; }
+      .search-input { width: 140px; font-size: 13px; }
       thead th { padding: 0 8px 12px; font-size: 11px; }
       thead th:first-child { padding-left: 0; }
       td { padding: 16px 8px; }
       td:first-child { padding-left: 0; }
       .img-wrap { width: 88px; height: 60px; border-radius: var(--radius-sm); }
-      table thead th:nth-child(3),
-      table thead th:nth-child(4),
-      table tbody td:nth-child(3),
-      table tbody td:nth-child(4) { display: none; }
-      .subfilters { flex-wrap: wrap; overflow-x: visible; }
-      .md table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table thead th:nth-child(3), table thead th:nth-child(4),
+      table tbody td:nth-child(3), table tbody td:nth-child(4) { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
+      .md table { display: block; overflow-x: auto; }
     }
   </style>
 </head>
 <body>
 
-<!-- Scrollable title -->
 <div class="topbar-title">
   <div class="eyebrow">Urban Company</div>
   <h1>Revamp Assortment Exercise</h1>
 </div>
 
-<!-- Sticky nav: tabs + search -->
 <nav class="sticky-nav" id="sticky-nav">
   <div class="tabs">
     <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
@@ -536,492 +288,345 @@
     <button class="tab locked" data-cat="murals" disabled>Murals</button>
     <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
   </div>
-  <div class="nav-search">
+  <div class="nav-right">
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-list" title="List view">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <button class="view-btn" id="btn-grid" title="Grid view">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+      </button>
+    </div>
     <input class="search-input" id="nav-search-input" type="search" placeholder="Search..." autocomplete="off" />
   </div>
 </nav>
 
-<!-- Sub-filters (populated by JS) -->
 <div class="subfilters" id="subfilters"></div>
 
-<!-- Winning criteria -->
 <div class="criteria" id="criteria-box">
   <div class="criteria-label">Winning Criteria</div>
   <p id="criteria-text"></p>
 </div>
 
-<!-- Table -->
-<div class="table-wrap">
+<div class="table-wrap active" id="list-view">
   <table>
-    <thead id="thead">
-      <tr>
-        <th>Panel</th>
-        <th>Film</th>
-        <th>Demand</th>
-        <th>Mimicry</th>
-        <th class="hide-sm">Finish</th>
-        <th class="hide-sm">Best For</th>
-        <th>Score</th>
-        <th>Tier</th>
-      </tr>
-    </thead>
-    <tbody id="tbody">
-      <tr><td colspan="8" class="loading">Loading…</td></tr>
-    </tbody>
+    <thead id="thead"><tr>
+      <th>Panel</th><th>Film</th><th>Demand</th><th>Mimicry</th>
+      <th class="hide-sm">Finish</th><th class="hide-sm">Best For</th><th>Score</th><th>Tier</th>
+    </tr></thead>
+    <tbody id="tbody"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody>
   </table>
 </div>
 
-<!-- Lightbox -->
+<div class="grid-wrap" id="grid-view">
+  <div class="grid" id="grid"></div>
+</div>
+
 <div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
   <img id="lightbox-img" src="" alt="" />
 </div>
 
-<!-- Backdrop + Drawer -->
 <div class="backdrop" id="backdrop"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
     <span class="drawer-title" id="drawer-title">Report</span>
-    <button class="close-btn" id="close-btn">✕</button>
+    <button class="close-btn" id="close-btn">&times;</button>
   </div>
   <div class="drawer-body">
-    <div class="drawer-img" id="drawer-img" style="display:none">
-      <img id="drawer-img-el" src="" alt="" />
-    </div>
-    <div class="md" id="drawer-md"><div class="loading">Loading…</div></div>
+    <div class="drawer-img" id="drawer-img" style="display:none"><img id="drawer-img-el" src="" alt="" /></div>
+    <div class="md" id="drawer-md"><div class="loading">Loading...</div></div>
   </div>
 </div>
 
 <script>
-  // ── Enlarge icon SVG ──
-  const ENLARGE_ICON = `<svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1 4V1H4M7 1H10V4M10 7V10H7M4 10H1V7" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
+const ENLARGE_ICON = `<svg width="13" height="13" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 4V1H4M7 1H10V4M10 7V10H7M4 10H1V7" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const STAR_ICON = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.3l2 4.1 4.5.6-3.3 3.2.8 4.5L8 11.5l-4 2.2.8-4.5L1.5 6l4.5-.6z"/></svg>`;
 
-  // ── Lightbox ──
-  const lightbox     = document.getElementById('lightbox');
-  const lightboxImg  = document.getElementById('lightbox-img');
+// ── Lightbox ──
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+function openLightbox(src, alt) { lightboxImg.src = src; lightboxImg.alt = alt||''; lightbox.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target===lightbox||e.target===lightboxImg) closeLightbox(); });
 
-  function openLightbox(src, alt) {
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox || e.target === lightboxImg) closeLightbox(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+// ── View toggle ──
+let viewMode = 'list';
+const listView = document.getElementById('list-view');
+const gridView = document.getElementById('grid-view');
+const btnList = document.getElementById('btn-list');
+const btnGrid = document.getElementById('btn-grid');
 
-  const CRITERIA = {
-    veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight; a misread tone or wrong figure instantly reads as imitation. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. EIR pore registration (emboss aligned to grain lines) is the threshold between a trade-channel product and a specification-grade product. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
-    stones: `A top-performing stone panel is scored out of 10 across two exposed dimensions — Demand (market pull for that stone type in urban India) and Mimicry (design fidelity to the natural stone reference) — plus a composite score weighing 7 criteria: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
-    marble: `Marble Films are decorative PVC/PET surface wrap films used on modular furniture, wardrobes, kitchen cabinets, and vanity fronts. Scored on the same 7-dimension framework as stone panels: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Key evaluation criteria specific to films: pattern repeat length (critical for multi-door installations), EIR emboss depth for haptic quality, and matte/gloss finish calibration. Matte white marble films are the #1 demanded decorative surface in Indian modular furniture (2024–27).`,
-    murals: `Coming soon.`,
-    limewash: `Coming soon.`,
-  };
+function setView(mode) {
+  viewMode = mode;
+  listView.classList.toggle('active', mode==='list');
+  gridView.classList.toggle('active', mode==='grid');
+  btnList.classList.toggle('active', mode==='list');
+  btnGrid.classList.toggle('active', mode==='grid');
+}
+btnList.addEventListener('click', () => setView('list'));
+btnGrid.addEventListener('click', () => setView('grid'));
 
-  // ── Tier class helpers ──
-  function tierClass(tier) {
-    if (tier.includes('Strong')) return 't-strong';
-    if (tier.includes('Niche'))  return 't-niche';
-    return 't-low';
-  }
+const CRITERIA = {
+  veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
+  stones: `A top-performing stone panel is scored across Demand + Mimicry, plus a 7-dimension composite: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish (12%), Versatility (10%), Texture (8%), Trend (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand.`,
+  marble: `Marble Films are decorative surface wraps for modular furniture. Scored on the same 7-dimension framework as stone panels. Key criteria: pattern repeat length, EIR emboss depth, matte/gloss calibration. Matte white marble films are the #1 demanded decorative surface in Indian modular furniture.`,
+  murals: 'Coming soon.', limewash: 'Coming soon.',
+};
 
-  function tierClassStone(tier) {
-    if (tier === 'Ultra-Premium') return 't-strong';
-    if (tier === 'Premium')       return 't-strong';
-    if (tier === 'Mid-Premium')   return 't-niche';
-    if (tier === 'Value')         return 't-low';
-    return 't-low';
-  }
+function tierClass(tier) { return tier.includes('Strong') ? 't-strong' : tier.includes('Niche') ? 't-niche' : 't-low'; }
+function tierClassStone(tier) { return (tier==='Ultra-Premium'||tier==='Premium') ? 't-strong' : tier==='Mid-Premium' ? 't-niche' : 't-low'; }
+function bar(score, cls) { return `<div class="score-num">${score.toFixed(1)}</div><div class="bar-track"><div class="bar-fill ${cls}" style="width:${score*10}%"></div></div>`; }
+function scoreColor(tc) { return tc==='t-strong' ? 'var(--green)' : tc==='t-niche' ? 'var(--amber)' : 'var(--red)'; }
 
-  // ── Score bar helpers ──
-  function bar(score, cls) {
-    return `<div class="score-num">${score.toFixed(1)}</div>
-            <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 10}%"></div></div>`;
-  }
+function speciesGroup(sp) { if(sp.includes('Walnut'))return'walnut'; if(sp.includes('Teak'))return'teak'; if(sp.includes('Oak')&&!sp.includes('Lacewood')&&!sp.includes('Silky'))return'oak'; return'specialty'; }
+function colourGroup(c) { c=(c||'').toLowerCase(); if(c==='white'||c==='off-white')return'white'; if(c==='grey'||c==='gray')return'grey'; if(c==='beige'||c==='cream'||c==='warm')return'beige'; if(c==='dark'||c==='black'||c==='charcoal')return'dark'; return'special'; }
 
-  // ── Veneer sub-filters ──
-  function speciesGroup(species) {
-    if (species.includes('Walnut')) return 'walnut';
-    if (species.includes('Teak'))   return 'teak';
-    if (species.includes('Oak') && !species.includes('Lacewood') && !species.includes('Silky')) return 'oak';
-    return 'specialty';
-  }
+let allFilms=[], allStones=[], allMarbles=[];
+let activeSubfilter='all', activeStoneSubfilter='all', activeMarbleSubfilter='all';
 
-  let allFilms = [];
-  let activeSubfilter = 'all';
-
-  function renderSubfilters() {
-    const counts = { all: allFilms.length, walnut: 0, teak: 0, oak: 0, specialty: 0 };
-    allFilms.forEach(f => counts[speciesGroup(f.species)]++);
-
-    const labels = [['all','All'],['walnut','Walnut'],['teak','Teak'],['oak','Oak'],['specialty','Specialty']];
-    const container = document.getElementById('subfilters');
-    container.innerHTML = labels.map(([key, label]) =>
-      `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
-    ).join('');
-    container.querySelectorAll('.subfilter').forEach(btn => {
-      btn.addEventListener('click', () => { activeSubfilter = btn.dataset.sf; renderSubfilters(); filterRows(); });
-    });
-  }
-
-  function filterRows() {
-    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
-    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
-      const sfMatch = activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter;
-      const textMatch = !q || tr.dataset.search.includes(q);
-      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
-    });
-  }
-
-  // ── Stone sub-filters ──
-  function colourGroup(colourFamily) {
-    const c = (colourFamily || '').toLowerCase();
-    if (c === 'white' || c === 'off-white') return 'white';
-    if (c === 'grey' || c === 'gray')       return 'grey';
-    if (c === 'beige' || c === 'cream' || c === 'warm') return 'beige';
-    if (c === 'dark' || c === 'black' || c === 'charcoal') return 'dark';
-    return 'special';
-  }
-
-  let allStones = [];
-  let activeStoneSubfilter = 'all';
-
-  function renderStoneSubfilters() {
-    const selectedCount = allStones.filter(s => s.selected).length;
-    const counts = { all: allStones.length, white: 0, grey: 0, beige: 0, dark: 0, special: 0 };
-    allStones.forEach(s => counts[colourGroup(s.colourFamily)]++);
-
-    const labels = [['all','All'],['selected','Selected'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
-    const container = document.getElementById('subfilters');
-    container.innerHTML = labels.map(([key, label]) => {
-      const count = key === 'selected' ? selectedCount : counts[key];
-      const isSelected = key === 'selected';
-      const activeClass = activeStoneSubfilter === key ? ' active' : '';
-      const selectedStyle = isSelected && activeStoneSubfilter !== key
-        ? ' style="border-color:#008a05;color:#008a05;"'
-        : '';
-      return `<button class="subfilter${activeClass}"${selectedStyle} data-sf="${key}">${label} <span class="sf-count">(${count})</span></button>`;
-    }).join('');
-    container.querySelectorAll('.subfilter').forEach(btn => {
-      btn.addEventListener('click', () => { activeStoneSubfilter = btn.dataset.sf; renderStoneSubfilters(); filterStoneRows(); });
-    });
-  }
-
-  function filterStoneRows() {
-    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
-    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
-      const sfMatch = activeStoneSubfilter === 'all'
-        || (activeStoneSubfilter === 'selected' ? tr.dataset.selected === 'true' : tr.dataset.sf === activeStoneSubfilter);
-      const textMatch = !q || tr.dataset.search.includes(q);
-      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
-    });
-  }
-
-  // ── Load veneer catalog ──
-  async function loadCatalog() {
-    allFilms = (await fetch('./films.json').then(r => r.json())).sort((a, b) => b.score - a.score);
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-
-    // Set veneer thead
-    document.getElementById('thead').innerHTML = `<tr>
-      <th>Panel</th>
-      <th>Film</th>
-      <th>Demand</th>
-      <th>Mimicry</th>
-      <th class="hide-sm">Finish</th>
-      <th class="hide-sm">Best For</th>
-      <th>Score</th>
-      <th>Tier</th>
-    </tr>`;
-
-    allFilms.forEach(f => {
-      const tc = tierClass(f.tier);
-      const tr = document.createElement('tr');
-      tr.dataset.sf = speciesGroup(f.species);
-      tr.dataset.search = [f.name, f.species, f.speciesLatin, f.code, f.tier, f.cut, f.finish].join(' ').toLowerCase();
-      tr.innerHTML = `
-        <td>
-          <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}" data-image="${f.image}">
-            <img src="${f.image}" alt="${f.name}" loading="lazy" />
-            <div class="img-overlay"><span>View Report ↗</span></div>
-            <button class="enlarge-btn" data-src="${f.image}" data-alt="${f.name}" title="Enlarge">${ENLARGE_ICON}</button>
-          </div>
-        </td>
-        <td class="name-cell">
-          <div class="film-name">${f.name}</div>
-          <div class="film-sub">${f.code}<br><i>${f.speciesLatin}</i></div>
-        </td>
-        <td class="score-col">${bar(f.demand, 'bar-demand')}</td>
-        <td class="score-col">${bar(f.mimicry, 'bar-mimicry')}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${f.finish}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${f.bestCities.replace(/·/g, '<br>')}</td>
-        <td><div class="score-pill ${tc}">${f.score.toFixed(1)}</div></td>
-        <td><span class="tier-badge ${tc}">${f.tier}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    // Update Veneers tab with total count
-    document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
-
-    document.querySelectorAll('.img-wrap').forEach(el => {
-      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
-      el.addEventListener('click', open);
-      el.addEventListener('keydown', e => e.key === 'Enter' && open());
-    });
-    document.querySelectorAll('.enlarge-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
-    });
-
-    renderSubfilters();
-  }
-
-  // ── Load stone catalog ──
-  async function loadStones() {
-    allStones = (await fetch('./stones.json').then(r => r.json())).sort((a, b) => b.score - a.score);
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-
-    // Set stone thead — same column labels as veneers for unified UX
-    document.getElementById('thead').innerHTML = `<tr>
-      <th>Panel</th>
-      <th>Stone</th>
-      <th>Demand</th>
-      <th>Mimicry</th>
-      <th class="hide-sm">Finish</th>
-      <th class="hide-sm">Best For</th>
-      <th>Score</th>
-      <th>Tier</th>
-    </tr>`;
-
-    allStones.forEach(s => {
-      const tc = tierClassStone(s.tier);
-      const tr = document.createElement('tr');
-      tr.dataset.sf = colourGroup(s.colourFamily);
-      tr.dataset.search = [s.name, s.stoneReference, s.code, s.colourFamily, s.tier, s.finish, s.keyStrength].join(' ').toLowerCase();
-      const selectedBadge = s.selected ? `<div class="selected-badge">Selected</div>` : '';
-      tr.dataset.selected = s.selected ? 'true' : 'false';
-      tr.innerHTML = `
-        <td>
-          <div class="img-wrap" role="button" tabindex="0" data-file="${s.file}" data-name="${s.name}" data-image="${s.image}">
-            <img src="${s.image}" alt="${s.name}" loading="lazy" />
-            <div class="img-overlay"><span>View Report ↗</span></div>
-            <button class="enlarge-btn" data-src="${s.image}" data-alt="${s.name}" title="Enlarge">${ENLARGE_ICON}</button>
-          </div>
-        </td>
-        <td class="name-cell">
-          <div class="film-name">${s.name}</div>
-          <div class="film-sub">${s.code}<br><i>${s.stoneReference}</i></div>
-          ${selectedBadge}
-        </td>
-        <td class="score-col">${bar(s.demand, 'bar-demand')}</td>
-        <td class="score-col">${bar(s.mimicry, 'bar-mimicry')}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${s.finish}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${s.bestFor.replace(/·/g, '<br>')}</td>
-        <td><div class="score-pill ${tc}">${s.score.toFixed(1)}</div></td>
-        <td><span class="tier-badge ${tc}">${s.tier}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    // Update Stones tab with total count
-    document.getElementById('tab-stones').innerHTML = `Stone Panels <span class="sf-count">(${allStones.length})</span>`;
-
-    document.querySelectorAll('.img-wrap').forEach(el => {
-      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
-      el.addEventListener('click', open);
-      el.addEventListener('keydown', e => e.key === 'Enter' && open());
-    });
-    document.querySelectorAll('.enlarge-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
-    });
-
-    renderStoneSubfilters();
-  }
-
-  // ── Marble sub-filters ──
-  let allMarbles = [];
-  let activeMarbleSubfilter = 'all';
-
-  function renderMarbleSubfilters() {
-    const counts = { all: allMarbles.length, white: 0, grey: 0, beige: 0, dark: 0, special: 0 };
-    allMarbles.forEach(m => counts[colourGroup(m.colourFamily)]++);
-
-    const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
-    const container = document.getElementById('subfilters');
-    container.innerHTML = labels.map(([key, label]) =>
-      `<button class="subfilter${activeMarbleSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
-    ).join('');
-    container.querySelectorAll('.subfilter').forEach(btn => {
-      btn.addEventListener('click', () => { activeMarbleSubfilter = btn.dataset.sf; renderMarbleSubfilters(); filterMarbleRows(); });
-    });
-  }
-
-  function filterMarbleRows() {
-    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
-    document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
-      const sfMatch = activeMarbleSubfilter === 'all' || tr.dataset.sf === activeMarbleSubfilter;
-      const textMatch = !q || tr.dataset.search.includes(q);
-      tr.style.display = (sfMatch && textMatch) ? '' : 'none';
-    });
-  }
-
-  // ── Load marble catalog ──
-  async function loadMarbles() {
-    allMarbles = (await fetch('./marbles.json').then(r => r.json())).sort((a, b) => b.score - a.score);
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-
-    document.getElementById('thead').innerHTML = `<tr>
-      <th>Panel</th>
-      <th>Film</th>
-      <th>Demand</th>
-      <th>Mimicry</th>
-      <th class="hide-sm">Finish</th>
-      <th class="hide-sm">Best For</th>
-      <th>Score</th>
-      <th>Tier</th>
-    </tr>`;
-
-    allMarbles.forEach(m => {
-      const tc = tierClassStone(m.tier);
-      const tr = document.createElement('tr');
-      tr.dataset.sf = colourGroup(m.colourFamily);
-      tr.dataset.search = [m.name, m.item, m.stoneReference, m.code, m.colourFamily, m.tier, m.finish, m.keyStrength].join(' ').toLowerCase();
-      tr.innerHTML = `
-        <td>
-          <div class="img-wrap" role="button" tabindex="0" data-file="${m.file}" data-name="${m.name}" data-image="${m.image}">
-            <img src="${m.image}" alt="${m.name}" loading="lazy" />
-            <div class="img-overlay"><span>View Report ↗</span></div>
-            <button class="enlarge-btn" data-src="${m.image}" data-alt="${m.name}" title="Enlarge">${ENLARGE_ICON}</button>
-          </div>
-        </td>
-        <td class="name-cell">
-          <div class="film-name">${m.name}</div>
-          <div class="film-sub">${m.item} · ${m.brand}<br><i>${m.stoneReference}</i></div>
-        </td>
-        <td class="score-col">${bar(m.demand, 'bar-demand')}</td>
-        <td class="score-col">${bar(m.mimicry, 'bar-mimicry')}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${m.finish}</td>
-        <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${m.bestFor}</td>
-        <td><div class="score-pill ${tc}">${m.score.toFixed(1)}</div></td>
-        <td><span class="tier-badge ${tc}">${m.tier}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    document.getElementById('tab-marble').innerHTML = `Marble Films <span class="sf-count">(${allMarbles.length})</span>`;
-
-    document.querySelectorAll('.img-wrap').forEach(el => {
-      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
-      el.addEventListener('click', open);
-      el.addEventListener('keydown', e => e.key === 'Enter' && open());
-    });
-    document.querySelectorAll('.enlarge-btn').forEach(btn => {
-      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
-    });
-
-    renderMarbleSubfilters();
-  }
-
-  // ── Drawer ──
-  const drawer   = document.getElementById('drawer');
-  const backdrop = document.getElementById('backdrop');
-
-  async function openDrawer(path, name, image) {
-    document.getElementById('drawer-title').textContent = name;
-    document.getElementById('drawer-md').innerHTML = '<div class="loading">Loading…</div>';
-    // Show panel image at top of drawer
-    const imgWrap = document.getElementById('drawer-img');
-    const imgEl   = document.getElementById('drawer-img-el');
-    if (image) {
-      imgEl.src = image;
-      imgEl.alt = name;
-      imgWrap.style.display = '';
-    } else {
-      imgWrap.style.display = 'none';
-    }
-    drawer.classList.add('open');
-    backdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    try {
-      const md = await fetch(path).then(r => r.text());
-      document.getElementById('drawer-md').innerHTML = marked.parse(md);
-    } catch {
-      document.getElementById('drawer-md').innerHTML = '<div class="loading">Could not load report.</div>';
-    }
-  }
-
-  function close() {
-    drawer.classList.remove('open');
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('close-btn').addEventListener('click', close);
-  backdrop.addEventListener('click', close);
-  document.addEventListener('keydown', e => e.key === 'Escape' && close());
-
-  // ── Tabs ──
-  let currentTab = 'veneers';
-
-  function setTab(cat) {
-    currentTab = cat;
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
-    document.getElementById('criteria-text').textContent = CRITERIA[cat] || '';
-    document.getElementById('nav-search-input').value = '';
-    if (cat === 'veneers') {
-      activeSubfilter = 'all';
-      loadCatalog();
-    } else if (cat === 'stones') {
-      activeStoneSubfilter = 'all';
-      loadStones();
-    } else if (cat === 'marble') {
-      activeMarbleSubfilter = 'all';
-      loadMarbles();
-    }
-  }
-
-  document.querySelectorAll('.tab:not(.locked)').forEach(t => {
-    t.addEventListener('click', () => setTab(t.dataset.cat));
+// ── Shared: attach drawer + enlarge listeners ──
+function attachListeners() {
+  document.querySelectorAll('.img-wrap, .grid-card-img').forEach(el => {
+    if (el._bound) return; el._bound = true;
+    const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
+    el.addEventListener('click', open);
   });
-
-  // ── Boot ──
-  // Pre-load counts for all tabs so numbers are visible from the start
-  Promise.all([
-    fetch('./films.json').then(r => r.json()).catch(() => []),
-    fetch('./stones.json').then(r => r.json()).catch(() => []),
-    fetch('./marbles.json').then(r => r.json()).catch(() => []),
-  ]).then(([films, stones, marbles]) => {
-    document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${films.length})</span>`;
-    document.getElementById('tab-stones').innerHTML  = `Stone Panels <span class="sf-count">(${stones.length})</span>`;
-    document.getElementById('tab-marble').innerHTML  = `Marble Films <span class="sf-count">(${marbles.length})</span>`;
+  document.querySelectorAll('.enlarge-btn').forEach(btn => {
+    if (btn._bound) return; btn._bound = true;
+    btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
   });
+}
 
-  // ── Sticky nav scroll shadow ──
-  const stickyNav = document.getElementById('sticky-nav');
-  window.addEventListener('scroll', () => {
-    stickyNav.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
+// ── Grid card builder ──
+function gridCard(item, tc, isSelected) {
+  const selectedBadge = isSelected ? `<div class="selected-badge">Selected</div>` : '';
+  return `<div class="grid-card" data-sf="${item._sf}" data-search="${item._search}" data-selected="${isSelected}">
+    <div class="grid-card-img" data-file="${item.file}" data-name="${item.name}" data-image="${item.image}">
+      <img src="${item.image}" alt="${item.name}" loading="lazy" />
+      ${selectedBadge}
+      <button class="enlarge-btn" data-src="${item.image}" data-alt="${item.name}" title="Enlarge">${ENLARGE_ICON}</button>
+    </div>
+    <div class="grid-card-info">
+      <div class="grid-card-top">
+        <div class="grid-card-name">${item.name}</div>
+        <div class="grid-card-score" style="color:${scoreColor(tc)}">${STAR_ICON} ${item.score.toFixed(1)}</div>
+      </div>
+      <div class="grid-card-sub">${item.code || item.item || ''}</div>
+      <div class="grid-card-tier">${item.tier}</div>
+    </div>
+  </div>`;
+}
 
-  // ── Nav search triggers current tab's filter ──
-  document.getElementById('nav-search-input').addEventListener('input', () => {
-    if (currentTab === 'veneers') filterRows();
-    else if (currentTab === 'stones') filterStoneRows();
-    else if (currentTab === 'marble') filterMarbleRows();
+// ── Subfilter renderers ──
+function renderSubfilters() {
+  const counts = { all:allFilms.length, walnut:0, teak:0, oak:0, specialty:0 };
+  allFilms.forEach(f => counts[speciesGroup(f.species)]++);
+  const labels = [['all','All'],['walnut','Walnut'],['teak','Teak'],['oak','Oak'],['specialty','Specialty']];
+  document.getElementById('subfilters').innerHTML = labels.map(([k,l]) =>
+    `<button class="subfilter${activeSubfilter===k?' active':''}" data-sf="${k}">${l} <span class="sf-count">(${counts[k]})</span></button>`
+  ).join('');
+  document.querySelectorAll('#subfilters .subfilter').forEach(btn => {
+    btn.addEventListener('click', () => { activeSubfilter=btn.dataset.sf; renderSubfilters(); filterCurrent(); });
   });
+}
+function renderStoneSubfilters() {
+  const selCt = allStones.filter(s=>s.selected).length;
+  const counts = { all:allStones.length, white:0, grey:0, beige:0, dark:0, special:0 };
+  allStones.forEach(s => counts[colourGroup(s.colourFamily)]++);
+  const labels = [['all','All'],['selected','Selected'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
+  document.getElementById('subfilters').innerHTML = labels.map(([k,l]) => {
+    const ct = k==='selected'?selCt:counts[k];
+    const style = k==='selected'&&activeStoneSubfilter!==k?' style="border-color:var(--green);color:var(--green)"':'';
+    return `<button class="subfilter${activeStoneSubfilter===k?' active':''}"${style} data-sf="${k}">${l} <span class="sf-count">(${ct})</span></button>`;
+  }).join('');
+  document.querySelectorAll('#subfilters .subfilter').forEach(btn => {
+    btn.addEventListener('click', () => { activeStoneSubfilter=btn.dataset.sf; renderStoneSubfilters(); filterCurrent(); });
+  });
+}
+function renderMarbleSubfilters() {
+  const counts = { all:allMarbles.length, white:0, grey:0, beige:0, dark:0, special:0 };
+  allMarbles.forEach(m => counts[colourGroup(m.colourFamily)]++);
+  const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
+  document.getElementById('subfilters').innerHTML = labels.map(([k,l]) =>
+    `<button class="subfilter${activeMarbleSubfilter===k?' active':''}" data-sf="${k}">${l} <span class="sf-count">(${counts[k]})</span></button>`
+  ).join('');
+  document.querySelectorAll('#subfilters .subfilter').forEach(btn => {
+    btn.addEventListener('click', () => { activeMarbleSubfilter=btn.dataset.sf; renderMarbleSubfilters(); filterCurrent(); });
+  });
+}
 
-  // ── Clear search on tab switch ──
-  const origSetTab = setTab;
+// ── Unified filter ──
+function filterCurrent() {
+  const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase()||'';
+  let activeSf;
+  if(currentTab==='veneers') activeSf=activeSubfilter;
+  else if(currentTab==='stones') activeSf=activeStoneSubfilter;
+  else activeSf=activeMarbleSubfilter;
 
-  setTab('veneers');
+  // Filter list rows
+  document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
+    const sfOk = activeSf==='all' || (activeSf==='selected'?tr.dataset.selected==='true':tr.dataset.sf===activeSf);
+    const qOk = !q || tr.dataset.search.includes(q);
+    tr.style.display = (sfOk&&qOk)?'':'none';
+  });
+  // Filter grid cards
+  document.querySelectorAll('.grid-card').forEach(card => {
+    const sfOk = activeSf==='all' || (activeSf==='selected'?card.dataset.selected==='true':card.dataset.sf===activeSf);
+    const qOk = !q || card.dataset.search.includes(q);
+    card.style.display = (sfOk&&qOk)?'':'none';
+  });
+}
+
+// ── Load catalogs ──
+async function loadCatalog() {
+  allFilms = (await fetch('./films.json').then(r=>r.json())).sort((a,b)=>b.score-a.score);
+  const tbody = document.getElementById('tbody');
+  const grid = document.getElementById('grid');
+  tbody.innerHTML = ''; grid.innerHTML = '';
+  document.getElementById('thead').innerHTML = '<tr><th>Panel</th><th>Film</th><th>Demand</th><th>Mimicry</th><th class="hide-sm">Finish</th><th class="hide-sm">Best For</th><th>Score</th><th>Tier</th></tr>';
+
+  allFilms.forEach(f => {
+    const tc = tierClass(f.tier);
+    f._sf = speciesGroup(f.species);
+    f._search = [f.name,f.species,f.speciesLatin,f.code,f.tier,f.cut,f.finish].join(' ').toLowerCase();
+    const tr = document.createElement('tr');
+    tr.dataset.sf=f._sf; tr.dataset.search=f._search;
+    tr.innerHTML = `
+      <td><div class="img-wrap" data-file="${f.file}" data-name="${f.name}" data-image="${f.image}">
+        <img src="${f.image}" alt="${f.name}" loading="lazy" />
+        <div class="img-overlay"><span>View Report</span></div>
+        <button class="enlarge-btn" data-src="${f.image}" data-alt="${f.name}" title="Enlarge">${ENLARGE_ICON}</button>
+      </div></td>
+      <td class="name-cell"><div class="film-name">${f.name}</div><div class="film-sub">${f.code}<br><i>${f.speciesLatin}</i></div></td>
+      <td class="score-col">${bar(f.demand,'bar-demand')}</td>
+      <td class="score-col">${bar(f.mimicry,'bar-mimicry')}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${f.finish}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${f.bestCities.replace(/·/g,'<br>')}</td>
+      <td><div class="score-pill ${tc}">${f.score.toFixed(1)}</div></td>
+      <td><span class="tier-badge ${tc}">${f.tier}</span></td>`;
+    tbody.appendChild(tr);
+    grid.innerHTML += gridCard(f, tc, false);
+  });
+  document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
+  attachListeners(); renderSubfilters();
+}
+
+async function loadStones() {
+  allStones = (await fetch('./stones.json').then(r=>r.json())).sort((a,b)=>b.score-a.score);
+  const tbody = document.getElementById('tbody');
+  const grid = document.getElementById('grid');
+  tbody.innerHTML = ''; grid.innerHTML = '';
+  document.getElementById('thead').innerHTML = '<tr><th>Panel</th><th>Stone</th><th>Demand</th><th>Mimicry</th><th class="hide-sm">Finish</th><th class="hide-sm">Best For</th><th>Score</th><th>Tier</th></tr>';
+
+  allStones.forEach(s => {
+    const tc = tierClassStone(s.tier);
+    s._sf = colourGroup(s.colourFamily);
+    s._search = [s.name,s.stoneReference,s.code,s.colourFamily,s.tier,s.finish,s.keyStrength].join(' ').toLowerCase();
+    const sel = s.selected?`<div class="selected-badge">Selected</div>`:'';
+    const tr = document.createElement('tr');
+    tr.dataset.sf=s._sf; tr.dataset.search=s._search; tr.dataset.selected=s.selected?'true':'false';
+    tr.innerHTML = `
+      <td><div class="img-wrap" data-file="${s.file}" data-name="${s.name}" data-image="${s.image}">
+        <img src="${s.image}" alt="${s.name}" loading="lazy" />
+        <div class="img-overlay"><span>View Report</span></div>
+        <button class="enlarge-btn" data-src="${s.image}" data-alt="${s.name}" title="Enlarge">${ENLARGE_ICON}</button>
+      </div></td>
+      <td class="name-cell"><div class="film-name">${s.name}</div><div class="film-sub">${s.code}<br><i>${s.stoneReference}</i></div>${sel}</td>
+      <td class="score-col">${bar(s.demand,'bar-demand')}</td>
+      <td class="score-col">${bar(s.mimicry,'bar-mimicry')}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${s.finish}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${(s.bestFor||'').replace(/·/g,'<br>')}</td>
+      <td><div class="score-pill ${tc}">${s.score.toFixed(1)}</div></td>
+      <td><span class="tier-badge ${tc}">${s.tier}</span></td>`;
+    tbody.appendChild(tr);
+    grid.innerHTML += gridCard(s, tc, !!s.selected);
+  });
+  document.getElementById('tab-stones').innerHTML = `Stone Panels <span class="sf-count">(${allStones.length})</span>`;
+  attachListeners(); renderStoneSubfilters();
+}
+
+async function loadMarbles() {
+  allMarbles = (await fetch('./marbles.json').then(r=>r.json())).sort((a,b)=>b.score-a.score);
+  const tbody = document.getElementById('tbody');
+  const grid = document.getElementById('grid');
+  tbody.innerHTML = ''; grid.innerHTML = '';
+  document.getElementById('thead').innerHTML = '<tr><th>Panel</th><th>Film</th><th>Demand</th><th>Mimicry</th><th class="hide-sm">Finish</th><th class="hide-sm">Best For</th><th>Score</th><th>Tier</th></tr>';
+
+  allMarbles.forEach(m => {
+    const tc = tierClassStone(m.tier);
+    m._sf = colourGroup(m.colourFamily);
+    m._search = [m.name,m.item,m.stoneReference,m.code,m.colourFamily,m.tier,m.finish,m.keyStrength].join(' ').toLowerCase();
+    const tr = document.createElement('tr');
+    tr.dataset.sf=m._sf; tr.dataset.search=m._search;
+    tr.innerHTML = `
+      <td><div class="img-wrap" data-file="${m.file}" data-name="${m.name}" data-image="${m.image}">
+        <img src="${m.image}" alt="${m.name}" loading="lazy" />
+        <div class="img-overlay"><span>View Report</span></div>
+        <button class="enlarge-btn" data-src="${m.image}" data-alt="${m.name}" title="Enlarge">${ENLARGE_ICON}</button>
+      </div></td>
+      <td class="name-cell"><div class="film-name">${m.name}</div><div class="film-sub">${m.item} · ${m.brand}<br><i>${m.stoneReference}</i></div></td>
+      <td class="score-col">${bar(m.demand,'bar-demand')}</td>
+      <td class="score-col">${bar(m.mimicry,'bar-mimicry')}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${m.finish}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${m.bestFor}</td>
+      <td><div class="score-pill ${tc}">${m.score.toFixed(1)}</div></td>
+      <td><span class="tier-badge ${tc}">${m.tier}</span></td>`;
+    tbody.appendChild(tr);
+    grid.innerHTML += gridCard(m, tc, false);
+  });
+  document.getElementById('tab-marble').innerHTML = `Marble Films <span class="sf-count">(${allMarbles.length})</span>`;
+  attachListeners(); renderMarbleSubfilters();
+}
+
+// ── Drawer ──
+const drawer = document.getElementById('drawer');
+const backdrop = document.getElementById('backdrop');
+async function openDrawer(path, name, image) {
+  document.getElementById('drawer-title').textContent = name;
+  document.getElementById('drawer-md').innerHTML = '<div class="loading">Loading...</div>';
+  const imgWrap = document.getElementById('drawer-img');
+  const imgEl = document.getElementById('drawer-img-el');
+  if(image){ imgEl.src=image; imgEl.alt=name; imgWrap.style.display=''; } else { imgWrap.style.display='none'; }
+  drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow='hidden';
+  try { const md=await fetch(path).then(r=>r.text()); document.getElementById('drawer-md').innerHTML=marked.parse(md); }
+  catch { document.getElementById('drawer-md').innerHTML='<div class="loading">Could not load report.</div>'; }
+}
+function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('close-btn').addEventListener('click', closeDrawer);
+backdrop.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ if(lightbox.classList.contains('open')) closeLightbox(); else closeDrawer(); }});
+
+// ── Tabs ──
+let currentTab = 'veneers';
+function setTab(cat) {
+  currentTab=cat;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.cat===cat));
+  document.getElementById('criteria-text').textContent=CRITERIA[cat]||'';
+  document.getElementById('nav-search-input').value='';
+  if(cat==='veneers'){ activeSubfilter='all'; loadCatalog(); }
+  else if(cat==='stones'){ activeStoneSubfilter='all'; loadStones(); }
+  else if(cat==='marble'){ activeMarbleSubfilter='all'; loadMarbles(); }
+}
+document.querySelectorAll('.tab:not(.locked)').forEach(t=>t.addEventListener('click',()=>setTab(t.dataset.cat)));
+
+// ── Boot ──
+Promise.all([
+  fetch('./films.json').then(r=>r.json()).catch(()=>[]),
+  fetch('./stones.json').then(r=>r.json()).catch(()=>[]),
+  fetch('./marbles.json').then(r=>r.json()).catch(()=>[]),
+]).then(([f,s,m])=>{
+  document.getElementById('tab-veneers').innerHTML=`Veneers <span class="sf-count">(${f.length})</span>`;
+  document.getElementById('tab-stones').innerHTML=`Stone Panels <span class="sf-count">(${s.length})</span>`;
+  document.getElementById('tab-marble').innerHTML=`Marble Films <span class="sf-count">(${m.length})</span>`;
+});
+
+const stickyNav = document.getElementById('sticky-nav');
+window.addEventListener('scroll', () => { stickyNav.classList.toggle('scrolled', window.scrollY>60); }, { passive:true });
+document.getElementById('nav-search-input').addEventListener('input', filterCurrent);
+
+setTab('veneers');
 </script>
 </body>
 </html>
