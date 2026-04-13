@@ -203,10 +203,14 @@
     .grid-card-img .enlarge-btn { top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; }
 
     .grid-card-info { padding: 12px 2px 0; }
-    .grid-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .grid-card-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.35; }
-    .grid-card-score { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; flex-shrink: 0; margin-left: 8px; }
-    .grid-card-score svg { width: 14px; height: 14px; }
+    .grid-card-score {
+      position: absolute; bottom: 10px; right: 10px; z-index: 2;
+      font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 3px;
+      background: var(--bg); color: var(--text); padding: 4px 10px; border-radius: 100px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .grid-card-score svg { width: 12px; height: 12px; }
     .grid-card-sub { font-size: 14px; color: var(--muted); margin-top: 2px; }
     .grid-card-tier { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
@@ -375,9 +379,9 @@ btnList.addEventListener('click', () => setView('list'));
 btnGrid.addEventListener('click', () => setView('grid'));
 
 const CRITERIA = {
-  veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
-  stones: `A top-performing stone panel is scored across Demand + Mimicry, plus a 7-dimension composite: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish (12%), Versatility (10%), Texture (8%), Trend (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand.`,
-  marble: `Marble Films are decorative surface wraps for modular furniture. Scored on the same 7-dimension framework as stone panels. Key criteria: pattern repeat length, EIR emboss depth, matte/gloss calibration. Matte white marble films are the #1 demanded decorative surface in Indian modular furniture.`,
+  veneers: `Score = Demand + Mimicry. Top films need high-demand species (walnut, teak, oak), accurate tone, correct finish (satin 8–15%), and EIR pore registration. 8.5+ = priority SKU.`,
+  stones: `7-dimension score: Fidelity 25%, Colour 20%, Veining 18%, Finish 12%, Versatility 10%, Texture 8%, Trend 7%. 80+ = Ultra-Premium lead SKU.`,
+  marble: `Same 7-dimension scoring as stones. Key differentiators: pattern repeat length, EIR emboss depth, matte calibration. White matte marble = #1 demand in Indian modular furniture.`,
   murals: 'Coming soon.', limewash: 'Coming soon.',
 };
 
@@ -412,13 +416,11 @@ function gridCard(item, tc, isSelected) {
     <div class="grid-card-img" data-file="${item.file}" data-name="${item.name}" data-image="${item.image}">
       <img src="${item.image}" alt="${item.name}" loading="lazy" />
       ${selectedBadge}
+      <div class="grid-card-score">${STAR_ICON} ${item.score.toFixed(1)}</div>
       <button class="enlarge-btn" data-src="${item.image}" data-alt="${item.name}" title="Enlarge">${ENLARGE_ICON}</button>
     </div>
     <div class="grid-card-info">
-      <div class="grid-card-top">
-        <div class="grid-card-name">${item.name}</div>
-        <div class="grid-card-score" style="color:${scoreColor(tc)}">${STAR_ICON} ${item.score.toFixed(1)}</div>
-      </div>
+      <div class="grid-card-name">${item.name}</div>
       <div class="grid-card-sub">${item.code || item.item || ''}</div>
       <div class="grid-card-tier">${item.tier}</div>
     </div>
