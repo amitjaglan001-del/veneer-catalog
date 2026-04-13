@@ -19,7 +19,8 @@
     "keyWeakness": "Linear vein regularity may show repeat across 3+ panels; flat satin surface lacks tactile depth",
     "priorityFix": "Develop open-pore matte variant — projected score 88-90 and strongest matte white-stone in collection",
     "image": "./stones/images/stone-011-sy08-white-cream-linear-travertine.jpg",
-    "file": "./stones/stone-011-sy08-white-cream-linear-travertine.md"
+    "file": "./stones/stone-011-sy08-white-cream-linear-travertine.md",
+    "selected": true
   },
   {
     "rank": 2,
@@ -41,7 +42,8 @@
     "keyWeakness": "Diffuse vein system (no hard vein lines) limits drama score; Bengaluru Japandi market prefers lighter tone",
     "priorityFix": "None — release as-is; pair with SY134 and SY08 as the warm travertine family",
     "image": "./stones/images/stone-009-sy130-warm-buff-travertine.jpg",
-    "file": "./stones/stone-009-sy130-warm-buff-travertine.md"
+    "file": "./stones/stone-009-sy130-warm-buff-travertine.md",
+    "selected": true
   },
   {
     "rank": 3,

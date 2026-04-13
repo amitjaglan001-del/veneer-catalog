@@ -354,6 +354,97 @@
     .md td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
     .md tr td:first-child { color: var(--text); }
 
+    /* ── Selected badge ─────────────────────────────────── */
+    .selected-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #fff;
+      background: #1e9e6b;
+      border-radius: 3px;
+      padding: 3px 7px;
+      margin-top: 5px;
+    }
+    .selected-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #7effc9;
+      flex-shrink: 0;
+    }
+
+    /* ── Enlarge button ──────────────────────────────────── */
+    .enlarge-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 3px;
+      background: rgba(0,0,0,0.45);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.15s;
+      z-index: 2;
+      padding: 0;
+    }
+    .img-wrap:hover .enlarge-btn { opacity: 1; }
+    .enlarge-btn:hover { background: rgba(0,0,0,0.75); }
+    .enlarge-btn svg { display: block; }
+
+    /* ── Lightbox ────────────────────────────────────────── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      transition: background 0.15s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+
     /* ── Drawer image ───────────────────────────────────── */
     .drawer-img {
       margin: -32px -32px 28px;
@@ -456,6 +547,12 @@
   </table>
 </div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
 <!-- Backdrop + Drawer -->
 <div class="backdrop" id="backdrop"></div>
 <div class="drawer" id="drawer">
@@ -472,6 +569,29 @@
 </div>
 
 <script>
+  // ── Enlarge icon SVG ──
+  const ENLARGE_ICON = `<svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 4V1H4M7 1H10V4M10 7V10H7M4 10H1V7" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+
+  // ── Lightbox ──
+  const lightbox     = document.getElementById('lightbox');
+  const lightboxImg  = document.getElementById('lightbox-img');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox || e.target === lightboxImg) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
   const CRITERIA = {
     veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight; a misread tone or wrong figure instantly reads as imitation. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. EIR pore registration (emboss aligned to grain lines) is the threshold between a trade-channel product and a specification-grade product. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
     stones: `A top-performing stone panel is scored out of 10 across two exposed dimensions — Demand (market pull for that stone type in urban India) and Mimicry (design fidelity to the natural stone reference) — plus a composite score weighing 7 criteria: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
@@ -551,15 +671,22 @@
   let activeStoneSubfilter = 'all';
 
   function renderStoneSubfilters() {
+    const selectedCount = allStones.filter(s => s.selected).length;
     const counts = { all: allStones.length, white: 0, grey: 0, beige: 0, dark: 0, special: 0 };
     allStones.forEach(s => counts[colourGroup(s.colourFamily)]++);
 
-    const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
+    const labels = [['all','All'],['selected','Selected'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
     const container = document.getElementById('subfilters');
     const prevQ = container.querySelector('.search-input')?.value || '';
-    container.innerHTML = labels.map(([key, label]) =>
-      `<button class="subfilter${activeStoneSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
-    ).join('') +
+    container.innerHTML = labels.map(([key, label]) => {
+      const count = key === 'selected' ? selectedCount : counts[key];
+      const isSelected = key === 'selected';
+      const activeClass = activeStoneSubfilter === key ? ' active' : '';
+      const selectedStyle = isSelected && activeStoneSubfilter !== key
+        ? ' style="border-color:#1e9e6b;color:#1e9e6b;"'
+        : '';
+      return `<button class="subfilter${activeClass}"${selectedStyle} data-sf="${key}">${label} <span class="sf-count">(${count})</span></button>`;
+    }).join('') +
       `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
     container.querySelectorAll('.subfilter').forEach(btn => {
       btn.addEventListener('click', () => { activeStoneSubfilter = btn.dataset.sf; renderStoneSubfilters(); filterStoneRows(); });
@@ -570,7 +697,8 @@
   function filterStoneRows() {
     const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
-      const sfMatch = activeStoneSubfilter === 'all' || tr.dataset.sf === activeStoneSubfilter;
+      const sfMatch = activeStoneSubfilter === 'all'
+        || (activeStoneSubfilter === 'selected' ? tr.dataset.selected === 'true' : tr.dataset.sf === activeStoneSubfilter);
       const textMatch = !q || tr.dataset.search.includes(q);
       tr.style.display = (sfMatch && textMatch) ? '' : 'none';
     });
@@ -604,6 +732,7 @@
           <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}" data-image="${f.image}">
             <img src="${f.image}" alt="${f.name}" loading="lazy" />
             <div class="img-overlay"><span>View Report ↗</span></div>
+            <button class="enlarge-btn" data-src="${f.image}" data-alt="${f.name}" title="Enlarge">${ENLARGE_ICON}</button>
           </div>
         </td>
         <td class="name-cell">
@@ -627,6 +756,9 @@
       const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
+    });
+    document.querySelectorAll('.enlarge-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
     });
 
     renderSubfilters();
@@ -655,16 +787,20 @@
       const tr = document.createElement('tr');
       tr.dataset.sf = colourGroup(s.colourFamily);
       tr.dataset.search = [s.name, s.stoneReference, s.code, s.colourFamily, s.tier, s.finish, s.keyStrength].join(' ').toLowerCase();
+      const selectedBadge = s.selected ? `<div class="selected-badge">Selected</div>` : '';
+      tr.dataset.selected = s.selected ? 'true' : 'false';
       tr.innerHTML = `
         <td>
           <div class="img-wrap" role="button" tabindex="0" data-file="${s.file}" data-name="${s.name}" data-image="${s.image}">
             <img src="${s.image}" alt="${s.name}" loading="lazy" />
             <div class="img-overlay"><span>View Report ↗</span></div>
+            <button class="enlarge-btn" data-src="${s.image}" data-alt="${s.name}" title="Enlarge">${ENLARGE_ICON}</button>
           </div>
         </td>
         <td class="name-cell">
           <div class="film-name">${s.name}</div>
           <div class="film-sub">${s.code}<br><i>${s.stoneReference}</i></div>
+          ${selectedBadge}
         </td>
         <td class="score-col">${bar(s.demand, 'bar-demand')}</td>
         <td class="score-col">${bar(s.mimicry, 'bar-mimicry')}</td>
@@ -683,6 +819,9 @@
       const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
+    });
+    document.querySelectorAll('.enlarge-btn').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); openLightbox(btn.dataset.src, btn.dataset.alt); });
     });
 
     renderStoneSubfilters();
