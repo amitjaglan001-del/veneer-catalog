@@ -9,17 +9,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0f0e0d;
-      --surface:   #181614;
-      --surface2:  #222018;
-      --border:    #2a2724;
-      --gold:      #c8a97a;
-      --gold-dim:  #7a6848;
-      --text:      #ede5d8;
-      --muted:     #8a8078;
-      --green:     #5aad8a;
-      --amber:     #d4a04a;
-      --red:       #c05848;
+      --bg:        #f5f2ee;
+      --surface:   #ffffff;
+      --surface2:  #ece8e2;
+      --border:    #ddd8d0;
+      --gold:      #7a5820;
+      --gold-dim:  #b08848;
+      --text:      #1c1714;
+      --muted:     #72665a;
+      --green:     #26835c;
+      --amber:     #a86c18;
+      --red:       #a03228;
       --drawer-w:  640px;
       --font:      'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
@@ -285,14 +285,14 @@
       border-radius: 3px;
       font-weight: 500;
     }
-    .t-strong .tier-badge, .tier-badge.t-strong { background: rgba(90,173,138,0.12); color: var(--green); }
-    .tier-badge.t-niche  { background: rgba(212,160,74,0.12); color: var(--amber); }
-    .tier-badge.t-low    { background: rgba(192,88,72,0.12);  color: var(--red); }
+    .t-strong .tier-badge, .tier-badge.t-strong { background: rgba(38,131,92,0.10); color: var(--green); }
+    .tier-badge.t-niche  { background: rgba(168,108,24,0.10); color: var(--amber); }
+    .tier-badge.t-low    { background: rgba(160,50,40,0.10);  color: var(--red); }
 
     /* ── Drawer ─────────────────────────────────────────── */
     .backdrop {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55);
+      background: rgba(0,0,0,0.35);
       z-index: 100;
       opacity: 0; pointer-events: none;
       transition: opacity 0.22s;
@@ -353,6 +353,20 @@
     .md th { text-align: left; padding: 8px 12px; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gold-dim); background: var(--surface2); border-bottom: 1px solid var(--border); font-weight: 400; }
     .md td { padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
     .md tr td:first-child { color: var(--text); }
+
+    /* ── Drawer image ───────────────────────────────────── */
+    .drawer-img {
+      margin: -32px -32px 28px;
+      height: 220px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .drawer-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
     .loading { text-align: center; padding: 60px 0; color: var(--muted); font-size: 13px; }
 
@@ -450,6 +464,9 @@
     <button class="close-btn" id="close-btn">✕</button>
   </div>
   <div class="drawer-body">
+    <div class="drawer-img" id="drawer-img" style="display:none">
+      <img id="drawer-img-el" src="" alt="" />
+    </div>
     <div class="md" id="drawer-md"><div class="loading">Loading…</div></div>
   </div>
 </div>
@@ -457,7 +474,7 @@
 <script>
   const CRITERIA = {
     veneers: `A top-performing veneer film must target a high-demand species — walnut, teak, or oak — and replicate it convincingly enough to pass close inspection. Tone accuracy and grain pattern carry the most weight; a misread tone or wrong figure instantly reads as imitation. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs. EIR pore registration (emboss aligned to grain lines) is the threshold between a trade-channel product and a specification-grade product. Score 8.5+ requires both demand above 8.0 and mimicry above 7.5.`,
-    stones: `A top-performing stone panel must excel across 7 weighted dimensions: Design Fidelity to the natural stone reference (25%), Colour-Palette Fit for Indian urban taste (20%), Veining Drama & Naturalism (18%), Surface Finish Quality (12%), Application Versatility (10%), Tactile/Embossed Texture (8%), and Trend Alignment 2024–2027 (7%). Composite score = Σ(D × W) / 5 out of 100. Ultra-Premium (80+) requires authentic dual-layer vein complexity, correct finish calibration, and strong urban trend alignment. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
+    stones: `A top-performing stone panel is scored out of 10 across two exposed dimensions — Demand (market pull for that stone type in urban India) and Mimicry (design fidelity to the natural stone reference) — plus a composite score weighing 7 criteria: Fidelity (25%), Colour Fit (20%), Veining Drama (18%), Finish Quality (12%), Versatility (10%), Texture (8%), Trend Alignment (7%). Score 8.0+ requires authentic vein complexity, correct finish calibration, and strong urban demand. The 5 core India essentials: Carrara-style white, Calacatta bold gold, Light Grey (Bardiglio-type), Warm Beige (Crema/Katni), and Dark Charcoal accent.`,
     murals: `Coming soon.`,
     limewash: `Coming soon.`,
   };
@@ -481,12 +498,6 @@
   function bar(score, cls) {
     return `<div class="score-num">${score.toFixed(1)}</div>
             <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 10}%"></div></div>`;
-  }
-
-  function barD(score, cls) {
-    // Stone dimension score out of 5
-    return `<div class="score-num">${score}/5</div>
-            <div class="bar-track"><div class="bar-fill ${cls}" style="width:${score * 20}%"></div></div>`;
   }
 
   // ── Veneer sub-filters ──
@@ -590,7 +601,7 @@
       tr.dataset.search = [f.name, f.species, f.speciesLatin, f.code, f.tier, f.cut, f.finish].join(' ').toLowerCase();
       tr.innerHTML = `
         <td>
-          <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}">
+          <div class="img-wrap" role="button" tabindex="0" data-file="${f.file}" data-name="${f.name}" data-image="${f.image}">
             <img src="${f.image}" alt="${f.name}" loading="lazy" />
             <div class="img-overlay"><span>View Report ↗</span></div>
           </div>
@@ -613,7 +624,7 @@
     document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
 
     document.querySelectorAll('.img-wrap').forEach(el => {
-      const open = () => openDrawer(el.dataset.file, el.dataset.name);
+      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
     });
@@ -627,12 +638,12 @@
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = '';
 
-    // Set stone thead
+    // Set stone thead — same column labels as veneers for unified UX
     document.getElementById('thead').innerHTML = `<tr>
       <th>Panel</th>
       <th>Stone</th>
-      <th>Fidelity</th>
-      <th>Veining</th>
+      <th>Demand</th>
+      <th>Mimicry</th>
       <th class="hide-sm">Finish</th>
       <th class="hide-sm">Best For</th>
       <th>Score</th>
@@ -646,7 +657,7 @@
       tr.dataset.search = [s.name, s.stoneReference, s.code, s.colourFamily, s.tier, s.finish, s.keyStrength].join(' ').toLowerCase();
       tr.innerHTML = `
         <td>
-          <div class="img-wrap" role="button" tabindex="0" data-file="${s.file}" data-name="${s.name}">
+          <div class="img-wrap" role="button" tabindex="0" data-file="${s.file}" data-name="${s.name}" data-image="${s.image}">
             <img src="${s.image}" alt="${s.name}" loading="lazy" />
             <div class="img-overlay"><span>View Report ↗</span></div>
           </div>
@@ -655,11 +666,11 @@
           <div class="film-name">${s.name}</div>
           <div class="film-sub">${s.code}<br><i>${s.stoneReference}</i></div>
         </td>
-        <td class="score-col">${barD(s.d1Fidelity, 'bar-demand')}</td>
-        <td class="score-col">${barD(s.d3Veining, 'bar-mimicry')}</td>
+        <td class="score-col">${bar(s.demand, 'bar-demand')}</td>
+        <td class="score-col">${bar(s.mimicry, 'bar-mimicry')}</td>
         <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${s.finish}</td>
         <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${s.bestFor.replace(/·/g, '<br>')}</td>
-        <td><div class="score-pill ${tc}" style="font-size:13px;width:52px;height:52px;">${s.composite}</div></td>
+        <td><div class="score-pill ${tc}">${s.score.toFixed(1)}</div></td>
         <td><span class="tier-badge ${tc}">${s.tier}</span></td>
       `;
       tbody.appendChild(tr);
@@ -669,7 +680,7 @@
     document.getElementById('tab-stones').innerHTML = `Stone Panels <span class="sf-count">(${allStones.length})</span>`;
 
     document.querySelectorAll('.img-wrap').forEach(el => {
-      const open = () => openDrawer(el.dataset.file, el.dataset.name);
+      const open = () => openDrawer(el.dataset.file, el.dataset.name, el.dataset.image);
       el.addEventListener('click', open);
       el.addEventListener('keydown', e => e.key === 'Enter' && open());
     });
@@ -681,9 +692,19 @@
   const drawer   = document.getElementById('drawer');
   const backdrop = document.getElementById('backdrop');
 
-  async function openDrawer(path, name) {
+  async function openDrawer(path, name, image) {
     document.getElementById('drawer-title').textContent = name;
     document.getElementById('drawer-md').innerHTML = '<div class="loading">Loading…</div>';
+    // Show panel image at top of drawer
+    const imgWrap = document.getElementById('drawer-img');
+    const imgEl   = document.getElementById('drawer-img-el');
+    if (image) {
+      imgEl.src = image;
+      imgEl.alt = name;
+      imgWrap.style.display = '';
+    } else {
+      imgWrap.style.display = 'none';
+    }
     drawer.classList.add('open');
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
