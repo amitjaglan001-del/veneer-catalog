@@ -36,12 +36,14 @@ Any complete India-facing stone panel collection needs these 5 core SKUs:
 | 1 | stone-011 | SY08 White Cream Linear Travertine | Silver Travertine / Bianco Travertino | **84** | Ultra-Premium | #1 Classic White + Grey Vein | 2026-04-13 |
 | 2 | stone-009 | YYC-SY130 Warm Buff Travertine | Noce Travertine / Walnut Travertine | **82** | Ultra-Premium | #4 Warm Cream (Rich) | 2026-04-13 |
 | 3 | stone-008 | YY-SY134 Warm Cream Travertine | Roman Travertine / Travertino Classico | **81** | Ultra-Premium | #4 Warm Cream (Refined) | 2026-04-13 |
+| 4 | stone-012 | Warm Greige — Dual Vein with Copper Hairlines | Diana Royal / Fior di Pesco Carnico | **78** | Premium | Copper Bridge Supp. | 2026-04-13 |
 | 4 | stone-001 | Silver Grey Marble — Bold White & Dark Fissure | Bardiglio / Silver Grey / Tundra Grey | **78** | Premium | #3 Light Grey Marble | 2026-04-13 |
 | 5 | stone-007 | Light Grey Travertine — Multi-Vein Large Slab | Silver Travertine / Grigio Noce | **76** | Premium | Supplementary Grey | 2026-04-13 |
 | 6 | stone-004 | London Grey Dark — Bold White Vein | Nero Marquina / Grigio Scuro | **72** | Premium | #5 Dark/Charcoal | 2026-04-13 |
 | 6 | stone-006 | Light Blue-Grey — Single Crack Vein | Bianca Perla / Silver Cloud | **72** | Premium | Japandi Supplementary | 2026-04-13 |
 | 8 | stone-002 | Cream Marble — CE Effect | Crema Marfil / Bottichino / Katni | **67** | Premium | #4 Entry Warm Cream | 2026-04-13 |
-| 9 | stone-005 | Grey Taupe — Warm Grey Single Vein | Fior di Bosco / Gris du Midi | **64** | Mid-Premium | Greige Bridge Supp. | 2026-04-13 |
+| 9 | stone-013 | Grey Fossil Limestone — Ceppo di Gré Type | Ceppo di Gré / Grigio Ceppo | **68** | Premium | Geological Sig. Supp. | 2026-04-13 |
+| 10 | stone-005 | Grey Taupe — Warm Grey Single Vein | Fior di Bosco / Gris du Midi | **64** | Mid-Premium | Greige Bridge Supp. | 2026-04-13 |
 | 9 | stone-010 | SY20 Pink-Beige Textured Stone | Pink Limestone / Dholpur Sandstone | **64** | Mid-Premium | Heritage Accent Supp. | 2026-04-13 |
 | 11 | stone-003 | Classical Rock — Rough Textured White | Quartzite Rock Face / Cleft Stone | **58** | Mid-Premium | Biophilic Accent Supp. | 2026-04-13 |
 
@@ -201,6 +203,64 @@ Mumbai: 9/10 | Bengaluru: 9/10 | Pune: 8/10 | Hyderabad: 7/10 | Chennai: 7/10 | 
 
 #### Key Insight
 The dual-vein system — bold white branching veins overlaid with a fine dark hairline fissure network — is this panel's definitive differentiator. No standard single-vein grey panel replicates this depth. At 78/100 it is the strongest grey panel in the collection and fills the essential Grey slot in any India-facing range. Honed matte variant is P1 priority to capture the fastest-growing premium segment in Mumbai, Bengaluru, and Pune.
+
+---
+
+### stone-012 — Warm Greige — Dual Vein with Copper Hairlines — 2026-04-13
+
+**Composite Score: 78 / 100** | **Tier:** Premium | **Copper Bridge Supplementary**
+
+| Property | Detail |
+|---|---|
+| Code | stone-012 |
+| Stone Reference | Diana Royal / Fior di Pesco Carnico / Breccia Aurora |
+| Colour Family | Warm Greige (grey-beige bridge) |
+| Base Tone | Warm greige — Pantone Warm Grey 3–4 with cream undertone |
+| Veining | Dual system: white/cream flowing primary veins (5–20mm) + copper/reddish-brown hairline secondary network |
+| Finish Shown | Semi-matte / Satin |
+| Priority Fix | Develop leathered or open-pore matte variant — projects 82–84 |
+| Top Applications | TV Feature Wall · Foyer · Bedroom Headboard · Dining Accent |
+
+#### Dimension Scores
+D1 Fidelity: 4/5 | D2 Colour: 4/5 | D3 Veining: 4/5 | D4 Finish: 4/5 | D5 Versatility: 4/5 | D6 Texture: 3/5 | D7 Trend: 4/5
+
+#### Segment Scores
+Heritage: 7/10 | Aspirational Pro: 8/10 | Design Millennial: 7/10 | Tier-2: 6/10
+
+#### City Scores
+Mumbai: 8/10 | Bengaluru: 7/10 | Delhi NCR: 9/10 | Hyderabad: 8/10 | Pune: 7/10 | Ahmedabad: 7/10 | Chennai: 7/10 | Tier-2: 6/10
+
+#### Key Insight
+The copper/reddish-brown hairline vein network is the most contextually precise design move in this collection for the 2024-2027 Indian premium market — it directly echoes the dominant brass and copper hardware trend. A stone panel that visually harmonises with every brass fixture in the room. Strongest for Delhi NCR's Neo-Classical brass-luxury aesthetic; also strong for Mumbai's contemporary copper-accent residential market.
+
+---
+
+### stone-013 — Grey Fossil Limestone — Ceppo di Gré Type — 2026-04-13
+
+**Composite Score: 68 / 100** | **Tier:** Premium | **Geological Signature Supplementary**
+
+| Property | Detail |
+|---|---|
+| Code | stone-013 |
+| Stone Reference | Ceppo di Gré / Grigio Ceppo / Pietra Fossile |
+| Colour Family | Medium-Cool Grey with Warm Undertone |
+| Base Tone | Medium-cool grey — Pantone Cool Grey 7 with faint taupe cast |
+| Surface Character | Dense fossil/shell aggregate inclusions (2–8mm); uniformly distributed; fine white hairline veins secondary |
+| Finish Shown | Semi-matte / Satin; SPC construction |
+| Priority Fix | Channel positioning: architect/designer spec market separately from residential |
+| Top Applications | TV Wall · Foyer · Home Office · Commercial Lobby · Dining Accent |
+
+#### Dimension Scores
+D1 Fidelity: 4/5 | D2 Colour: 3/5 | D3 Veining: 2/5 | D4 Finish: 4/5 | D5 Versatility: 3/5 | D6 Texture: 5/5 | D7 Trend: 4/5
+
+#### Segment Scores
+Heritage: 3/10 | Aspirational Pro: 7/10 | Design Millennial: 8/10 | Tier-2: 3/10
+
+#### City Scores
+Mumbai: 8/10 | Bengaluru: 9/10 | Delhi NCR: 5/10 | Hyderabad: 6/10 | Pune: 8/10 | Ahmedabad: 4/10 | Chennai: 6/10 | Tier-2: 3/10
+
+#### Key Insight
+Maximum tactile score (D6: 5/5) — the fossil aggregate creates lighting-reactive micro-topography unique in the collection. References Ceppo di Gré, one of contemporary European specification design's most prestigious sedimentary stones (heavily featured at Salone del Mobile 2023-2025). Composite score of 68 understates commercial ceiling in the Bengaluru-Mumbai architect channel where it competes at 80+ level. The collection's credibility SKU with design professionals.
 
 ---
 
