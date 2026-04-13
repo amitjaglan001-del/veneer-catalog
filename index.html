@@ -37,8 +37,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Header ─────────────────────────────────────────── */
-    header {
+    /* ── Top bar (scrollable title) ────────────────────── */
+    .topbar-title {
       padding: 40px var(--pad) 0;
     }
     .eyebrow {
@@ -47,39 +47,63 @@
       color: var(--muted);
       margin-bottom: 6px;
     }
-    header h1 {
+    .topbar-title h1 {
       font-size: 28px;
       font-weight: 600;
       letter-spacing: -0.5px;
       color: var(--text);
     }
 
-    /* ── Category tabs ──────────────────────────────────── */
+    /* ── Sticky nav (tabs + search) ─────────────────────── */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      transition: box-shadow 0.2s;
+    }
+    .sticky-nav.scrolled {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    /* ── Category tabs (inside sticky nav) ──────────────── */
     .tabs {
       display: flex;
-      gap: 8px;
-      padding: 28px var(--pad) 0;
+      gap: 6px;
+      align-items: center;
     }
     .tab {
-      padding: 10px 20px;
+      padding: 8px 18px;
       border-radius: 100px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      border: 1px solid var(--border);
+      border: none;
       color: var(--muted);
-      background: var(--bg);
+      background: transparent;
       transition: all 0.2s;
       font-family: var(--font);
+      white-space: nowrap;
     }
-    .tab:hover:not(.locked) { color: var(--text); border-color: #b0b0b0; }
+    .tab:hover:not(.locked) { color: var(--text); background: var(--surface); }
     .tab.active {
       background: var(--text);
-      border-color: var(--text);
       color: #fff;
     }
     .tab .sf-count { font-weight: 400; opacity: 0.7; }
     .tab.locked { opacity: 0.3; cursor: default; }
+
+    /* ── Nav search bar ─────────────────────────────────── */
+    .nav-search {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
 
     /* ── Sub-filters ────────────────────────────────────── */
     .subfilters {
@@ -116,8 +140,7 @@
 
     /* ── Search bar ─────────────────────────────────────── */
     .search-input {
-      max-width: 240px;
-      margin-left: auto;
+      width: 220px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
@@ -467,14 +490,21 @@
     @media (max-width: 860px) {
       :root { --pad: 24px; --drawer-w: 100vw; }
       .hide-sm { display: none; }
+      .sticky-nav { gap: 6px; padding: 12px var(--pad); }
+      .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .tabs::-webkit-scrollbar { display: none; }
+      .tab { flex-shrink: 0; }
       .subfilters { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
       .subfilters::-webkit-scrollbar { display: none; }
       .subfilter { flex-shrink: 0; }
     }
 
     @media (max-width: 540px) {
-      header { padding-top: 28px; }
-      header h1 { font-size: 22px; }
+      .topbar-title { padding-top: 28px; }
+      .topbar-title h1 { font-size: 22px; }
+      .sticky-nav { flex-wrap: wrap; }
+      .nav-search { width: 100%; margin-left: 0; }
+      .nav-search .search-input { width: 100%; }
       thead th { padding: 0 8px 12px; font-size: 11px; }
       thead th:first-child { padding-left: 0; }
       td { padding: 16px 8px; }
@@ -485,26 +515,31 @@
       table tbody td:nth-child(3),
       table tbody td:nth-child(4) { display: none; }
       .subfilters { flex-wrap: wrap; overflow-x: visible; }
-      .search-input { margin-left: 0; width: 100%; max-width: none; }
       .md table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     }
   </style>
 </head>
 <body>
 
-<header>
+<!-- Scrollable title -->
+<div class="topbar-title">
   <div class="eyebrow">Urban Company</div>
   <h1>Revamp Assortment Exercise</h1>
-</header>
-
-<!-- Category tabs -->
-<div class="tabs">
-  <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
-  <button class="tab" data-cat="stones" id="tab-stones">Stone Panels</button>
-  <button class="tab" data-cat="marble" id="tab-marble">Marble Films</button>
-  <button class="tab locked" data-cat="murals" disabled>Murals</button>
-  <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
 </div>
+
+<!-- Sticky nav: tabs + search -->
+<nav class="sticky-nav" id="sticky-nav">
+  <div class="tabs">
+    <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
+    <button class="tab" data-cat="stones" id="tab-stones">Stone Panels</button>
+    <button class="tab" data-cat="marble" id="tab-marble">Marble Films</button>
+    <button class="tab locked" data-cat="murals" disabled>Murals</button>
+    <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
+  </div>
+  <div class="nav-search">
+    <input class="search-input" id="nav-search-input" type="search" placeholder="Search..." autocomplete="off" />
+  </div>
+</nav>
 
 <!-- Sub-filters (populated by JS) -->
 <div class="subfilters" id="subfilters"></div>
@@ -627,19 +662,16 @@
 
     const labels = [['all','All'],['walnut','Walnut'],['teak','Teak'],['oak','Oak'],['specialty','Specialty']];
     const container = document.getElementById('subfilters');
-    const prevQ = container.querySelector('.search-input')?.value || '';
     container.innerHTML = labels.map(([key, label]) =>
       `<button class="subfilter${activeSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
-    ).join('') +
-      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
+    ).join('');
     container.querySelectorAll('.subfilter').forEach(btn => {
       btn.addEventListener('click', () => { activeSubfilter = btn.dataset.sf; renderSubfilters(); filterRows(); });
     });
-    document.getElementById('search-input').addEventListener('input', filterRows);
   }
 
   function filterRows() {
-    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
+    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
       const sfMatch = activeSubfilter === 'all' || tr.dataset.sf === activeSubfilter;
       const textMatch = !q || tr.dataset.search.includes(q);
@@ -667,25 +699,22 @@
 
     const labels = [['all','All'],['selected','Selected'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
     const container = document.getElementById('subfilters');
-    const prevQ = container.querySelector('.search-input')?.value || '';
     container.innerHTML = labels.map(([key, label]) => {
       const count = key === 'selected' ? selectedCount : counts[key];
       const isSelected = key === 'selected';
       const activeClass = activeStoneSubfilter === key ? ' active' : '';
       const selectedStyle = isSelected && activeStoneSubfilter !== key
-        ? ' style="border-color:#1e9e6b;color:#1e9e6b;"'
+        ? ' style="border-color:#008a05;color:#008a05;"'
         : '';
       return `<button class="subfilter${activeClass}"${selectedStyle} data-sf="${key}">${label} <span class="sf-count">(${count})</span></button>`;
-    }).join('') +
-      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
+    }).join('');
     container.querySelectorAll('.subfilter').forEach(btn => {
       btn.addEventListener('click', () => { activeStoneSubfilter = btn.dataset.sf; renderStoneSubfilters(); filterStoneRows(); });
     });
-    document.getElementById('search-input').addEventListener('input', filterStoneRows);
   }
 
   function filterStoneRows() {
-    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
+    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
       const sfMatch = activeStoneSubfilter === 'all'
         || (activeStoneSubfilter === 'selected' ? tr.dataset.selected === 'true' : tr.dataset.sf === activeStoneSubfilter);
@@ -827,19 +856,16 @@
 
     const labels = [['all','All'],['white','White'],['grey','Grey'],['beige','Beige'],['dark','Dark'],['special','Special']];
     const container = document.getElementById('subfilters');
-    const prevQ = container.querySelector('.search-input')?.value || '';
     container.innerHTML = labels.map(([key, label]) =>
       `<button class="subfilter${activeMarbleSubfilter === key ? ' active' : ''}" data-sf="${key}">${label} <span class="sf-count">(${counts[key]})</span></button>`
-    ).join('') +
-      `<input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off" value="${prevQ.replace(/"/g, '&quot;')}" />`;
+    ).join('');
     container.querySelectorAll('.subfilter').forEach(btn => {
       btn.addEventListener('click', () => { activeMarbleSubfilter = btn.dataset.sf; renderMarbleSubfilters(); filterMarbleRows(); });
     });
-    document.getElementById('search-input').addEventListener('input', filterMarbleRows);
   }
 
   function filterMarbleRows() {
-    const q = document.getElementById('search-input')?.value.trim().toLowerCase() || '';
+    const q = document.getElementById('nav-search-input')?.value.trim().toLowerCase() || '';
     document.querySelectorAll('#tbody tr[data-sf]').forEach(tr => {
       const sfMatch = activeMarbleSubfilter === 'all' || tr.dataset.sf === activeMarbleSubfilter;
       const textMatch = !q || tr.dataset.search.includes(q);
@@ -950,6 +976,7 @@
     currentTab = cat;
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
     document.getElementById('criteria-text').textContent = CRITERIA[cat] || '';
+    document.getElementById('nav-search-input').value = '';
     if (cat === 'veneers') {
       activeSubfilter = 'all';
       loadCatalog();
@@ -977,6 +1004,22 @@
     document.getElementById('tab-stones').innerHTML  = `Stone Panels <span class="sf-count">(${stones.length})</span>`;
     document.getElementById('tab-marble').innerHTML  = `Marble Films <span class="sf-count">(${marbles.length})</span>`;
   });
+
+  // ── Sticky nav scroll shadow ──
+  const stickyNav = document.getElementById('sticky-nav');
+  window.addEventListener('scroll', () => {
+    stickyNav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Nav search triggers current tab's filter ──
+  document.getElementById('nav-search-input').addEventListener('input', () => {
+    if (currentTab === 'veneers') filterRows();
+    else if (currentTab === 'stones') filterStoneRows();
+    else if (currentTab === 'marble') filterMarbleRows();
+  });
+
+  // ── Clear search on tab switch ──
+  const origSetTab = setTab;
 
   setTab('veneers');
 </script>
