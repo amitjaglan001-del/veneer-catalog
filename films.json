@@ -85,7 +85,8 @@
     "keyWeakness": "Slight red-warm tone bias. Short pattern repeat due to knot. Finish too high.",
     "priorityFix": "Cool tone 15% toward chocolate-brown + reduce finish to 10–14% satin",
     "image": "./films/images/huichuang-nb010-walnut.jpg",
-    "file": "./films/huichuang-nb010-walnut-film.md"
+    "file": "./films/huichuang-nb010-walnut-film.md",
+    "selected": true
   },
   {
     "rank": 5,
@@ -261,7 +262,8 @@
     "keyWeakness": "Demand ceiling below walnut. EIR registration unconfirmed.",
     "priorityFix": "Confirm EIR under raking light — upgrade if not registered",
     "image": "./films/images/artdecor-oak.jpg",
-    "file": "./films/artdecor-hy09162228-oak-film.md"
+    "file": "./films/artdecor-hy09162228-oak-film.md",
+    "selected": true
   },
   {
     "rank": 13,
@@ -305,7 +307,8 @@
     "keyWeakness": "Finish still 2–5% too high. No heartwood-sapwood contrast.",
     "priorityFix": "Reduce finish to 8–10% satin — unlocks HNI spec channel",
     "image": "./films/images/huichuang-nb016-teak.jpg",
-    "file": "./films/huichuang-nb016-teak-film.md"
+    "file": "./films/huichuang-nb016-teak-film.md",
+    "selected": true
   },
   {
     "rank": 15,
@@ -613,7 +616,8 @@
     "keyWeakness": "Ash is niche / unknown species in India. Very limited demand outside Japandi briefs.",
     "priorityFix": "Reposition as White Oak to access broader oak demand pool (7.2 vs 4.5 demand)",
     "image": "./films/images/huichuang-nb018-ash.jpg",
-    "file": "./films/huichuang-nb018-ash-film.md"
+    "file": "./films/huichuang-nb018-ash-film.md",
+    "selected": true
   },
   {
     "rank": 29,
