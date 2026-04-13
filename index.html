@@ -572,15 +572,16 @@ async function loadCatalog() {
     const tc = tierClass(f.tier);
     f._sf = speciesGroup(f.species);
     f._search = [f.name,f.species,f.speciesLatin,f.code,f.tier,f.cut,f.finish].join(' ').toLowerCase();
+    const sel = f.selected?`<div class="selected-badge">Selected</div>`:'';
     const tr = document.createElement('tr');
-    tr.dataset.sf=f._sf; tr.dataset.search=f._search;
+    tr.dataset.sf=f._sf; tr.dataset.search=f._search; tr.dataset.selected=f.selected?'true':'false';
     tr.innerHTML = `
       <td><div class="img-wrap" data-file="${f.file}" data-name="${f.name}" data-image="${f.image}">
         <img src="${f.image}" alt="${f.name}" loading="lazy" />
         <div class="img-overlay"><span>View Report</span></div>
         <button class="enlarge-btn" data-src="${f.image}" data-alt="${f.name}" title="Enlarge">${ENLARGE_ICON}</button>
       </div></td>
-      <td class="name-cell"><div class="film-name">${f.name}</div><div class="film-sub">${f.code}<br><i>${f.speciesLatin}</i></div></td>
+      <td class="name-cell"><div class="film-name">${f.name}</div><div class="film-sub">${f.code}<br><i>${f.speciesLatin}</i></div>${sel}</td>
       <td class="score-col">${bar(f.demand,'bar-demand')}</td>
       <td class="score-col">${bar(f.mimicry,'bar-mimicry')}</td>
       <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${f.finish}</td>
@@ -588,7 +589,7 @@ async function loadCatalog() {
       <td><div class="score-pill ${tc}">${f.score.toFixed(1)}</div></td>
       <td><span class="tier-badge ${tc}">${f.tier}</span></td>`;
     tbody.appendChild(tr);
-    grid.innerHTML += gridCard(f, tc, false);
+    grid.innerHTML += gridCard(f, tc, !!f.selected);
   });
   document.getElementById('tab-veneers').innerHTML = `Veneers <span class="sf-count">(${allFilms.length})</span>`;
   attachListeners(); renderSubfilters();
@@ -639,15 +640,16 @@ async function loadMarbles() {
     const tc = tierClassStone(m.tier);
     m._sf = colourGroup(m.colourFamily);
     m._search = [m.name,m.item,m.stoneReference,m.code,m.colourFamily,m.tier,m.finish,m.keyStrength].join(' ').toLowerCase();
+    const sel = m.selected?`<div class="selected-badge">Selected</div>`:'';
     const tr = document.createElement('tr');
-    tr.dataset.sf=m._sf; tr.dataset.search=m._search;
+    tr.dataset.sf=m._sf; tr.dataset.search=m._search; tr.dataset.selected=m.selected?'true':'false';
     tr.innerHTML = `
       <td><div class="img-wrap" data-file="${m.file}" data-name="${m.name}" data-image="${m.image}">
         <img src="${m.image}" alt="${m.name}" loading="lazy" />
         <div class="img-overlay"><span>View Report</span></div>
         <button class="enlarge-btn" data-src="${m.image}" data-alt="${m.name}" title="Enlarge">${ENLARGE_ICON}</button>
       </div></td>
-      <td class="name-cell"><div class="film-name">${m.name}</div><div class="film-sub">${m.item} · ${m.brand}<br><i>${m.stoneReference}</i></div></td>
+      <td class="name-cell"><div class="film-name">${m.name}</div><div class="film-sub">${m.item} · ${m.brand}<br><i>${m.stoneReference}</i></div>${sel}</td>
       <td class="score-col">${bar(m.demand,'bar-demand')}</td>
       <td class="score-col">${bar(m.mimicry,'bar-mimicry')}</td>
       <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:150px;line-height:1.5">${m.finish}</td>
@@ -655,7 +657,7 @@ async function loadMarbles() {
       <td><div class="score-pill ${tc}">${m.score.toFixed(1)}</div></td>
       <td><span class="tier-badge ${tc}">${m.tier}</span></td>`;
     tbody.appendChild(tr);
-    grid.innerHTML += gridCard(m, tc, false);
+    grid.innerHTML += gridCard(m, tc, !!m.selected);
   });
   document.getElementById('tab-marble').innerHTML = `Marble Films <span class="sf-count">(${allMarbles.length})</span>`;
   attachListeners(); renderMarbleSubfilters();
