@@ -211,7 +211,7 @@
     .grid-card-tier { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
     /* ── Close button (shared) ─────────────────────────── */
-    .close-btn { background: var(--bg); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; font-family: var(--font); transition: background 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .close-btn { background: var(--bg); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.12); padding: 0; line-height: 0; }
     .close-btn:hover { background: var(--surface2); }
 
     /* ── Detail bottom sheet (replaces drawer) ──────────── */
@@ -461,7 +461,7 @@
 <div class="backdrop" id="backdrop"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-close-outside">
-    <button class="close-btn" id="close-btn">&times;</button>
+    <button class="close-btn" id="close-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg></button>
   </div>
   <div class="drawer-body">
     <div class="drawer-img" id="drawer-img" style="display:none"><img id="drawer-img-el" src="" alt="" /></div>
@@ -480,7 +480,7 @@
 <div class="bs-backdrop" id="bs-backdrop"></div>
 <div class="bottom-sheet" id="bottom-sheet">
   <div class="bs-close-outside">
-    <button class="close-btn" id="bs-close">&times;</button>
+    <button class="close-btn" id="bs-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg></button>
   </div>
   <div class="bs-handle"><div class="bs-handle-bar"></div></div>
   <div class="bs-header">
@@ -851,6 +851,35 @@ function closeBottomSheet() {
 fabBtn.addEventListener('click', openBottomSheet);
 bsBackdrop.addEventListener('click', closeBottomSheet);
 document.getElementById('bs-close').addEventListener('click', closeBottomSheet);
+
+// ── Swipe down to close (shared helper) ──
+function addSwipeDown(sheetEl, closeFn) {
+  let startY = 0, currentY = 0, dragging = false;
+  sheetEl.addEventListener('touchstart', e => {
+    const body = sheetEl.querySelector('.drawer-body, .bs-body');
+    if (body && body.scrollTop > 0) return;
+    startY = e.touches[0].clientY;
+    currentY = startY;
+    dragging = true;
+    sheetEl.style.transition = 'none';
+  }, { passive: true });
+  sheetEl.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    currentY = e.touches[0].clientY;
+    const dy = currentY - startY;
+    if (dy > 0) sheetEl.style.transform = `translateY(${dy}px)`;
+  }, { passive: true });
+  sheetEl.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    sheetEl.style.transition = '';
+    const dy = currentY - startY;
+    if (dy > 100) { closeFn(); }
+    else { sheetEl.style.transform = ''; }
+  });
+}
+addSwipeDown(document.getElementById('drawer'), closeDrawer);
+addSwipeDown(document.getElementById('bottom-sheet'), closeBottomSheet);
 
 // ── Mobile search icon toggle ──
 const navRight = document.getElementById('nav-right');
