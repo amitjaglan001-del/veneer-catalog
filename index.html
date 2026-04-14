@@ -853,39 +853,6 @@ fabBtn.addEventListener('click', openBottomSheet);
 bsBackdrop.addEventListener('click', closeBottomSheet);
 document.getElementById('bs-close').addEventListener('click', closeBottomSheet);
 
-// ── Swipe down to close (shared helper) ──
-function addSwipeDown(sheetEl, closeFn) {
-  let startY = 0, currentY = 0, dragging = false;
-  sheetEl.addEventListener('touchstart', e => {
-    const body = sheetEl.querySelector('.drawer-body, .bs-body');
-    if (body && body.scrollTop > 0) return;
-    startY = e.touches[0].clientY;
-    currentY = startY;
-    dragging = true;
-    sheetEl.style.transition = 'none';
-  }, { passive: true });
-  sheetEl.addEventListener('touchmove', e => {
-    if (!dragging) return;
-    currentY = e.touches[0].clientY;
-    const dy = currentY - startY;
-    if (dy > 0) sheetEl.style.transform = `translateY(${dy}px)`;
-  }, { passive: true });
-  sheetEl.addEventListener('touchend', () => {
-    if (!dragging) return;
-    dragging = false;
-    const dy = currentY - startY;
-    const sheetH = sheetEl.offsetHeight;
-    sheetEl.style.transition = 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)';
-    if (dy > sheetH * 0.5) {
-      sheetEl.style.transform = `translateY(100%)`;
-      setTimeout(() => { sheetEl.style.transform = ''; closeFn(); }, 350);
-    } else {
-      sheetEl.style.transform = 'translateY(0)';
-    }
-  });
-}
-addSwipeDown(document.getElementById('drawer'), closeDrawer);
-addSwipeDown(document.getElementById('bottom-sheet'), closeBottomSheet);
 
 // ── Mobile search icon toggle ──
 const navRight = document.getElementById('nav-right');
