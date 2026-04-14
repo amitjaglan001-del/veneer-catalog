@@ -744,7 +744,7 @@ async function openDrawer(path, name, image) {
   try { const md=await fetch(path).then(r=>r.text()); document.getElementById('drawer-md').innerHTML=marked.parse(md); }
   catch { document.getElementById('drawer-md').innerHTML='<div class="loading">Could not load report.</div>'; }
 }
-function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
+function closeDrawer() { drawer.style.transform=''; drawer.style.transition=''; drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('close-btn').addEventListener('click', closeDrawer);
 backdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => { if(e.key==='Escape'){ if(lightbox.classList.contains('open')) closeLightbox(); else closeDrawer(); }});
@@ -843,6 +843,7 @@ function openBottomSheet() {
 }
 
 function closeBottomSheet() {
+  bottomSheet.style.transform=''; bottomSheet.style.transition='';
   bottomSheet.classList.remove('open');
   bsBackdrop.classList.remove('open');
   document.body.style.overflow = '';
@@ -872,10 +873,15 @@ function addSwipeDown(sheetEl, closeFn) {
   sheetEl.addEventListener('touchend', () => {
     if (!dragging) return;
     dragging = false;
-    sheetEl.style.transition = '';
     const dy = currentY - startY;
-    if (dy > 100) { closeFn(); }
-    else { sheetEl.style.transform = ''; }
+    const sheetH = sheetEl.offsetHeight;
+    sheetEl.style.transition = 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)';
+    if (dy > sheetH * 0.5) {
+      sheetEl.style.transform = `translateY(100%)`;
+      setTimeout(() => { sheetEl.style.transform = ''; closeFn(); }, 350);
+    } else {
+      sheetEl.style.transform = 'translateY(0)';
+    }
   });
 }
 addSwipeDown(document.getElementById('drawer'), closeDrawer);
