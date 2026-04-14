@@ -229,7 +229,9 @@
 
     .drawer-close-outside {
       position: absolute; top: -48px; right: 16px; z-index: 102;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
     }
+    .drawer.open .drawer-close-outside { opacity: 1; pointer-events: all; }
 
     .drawer-header { display: none; }
 
@@ -295,7 +297,8 @@
     }
     .bottom-sheet.open { transform: translateY(0); }
 
-    .bs-close-outside { position: absolute; top: -48px; right: 16px; z-index: 152; }
+    .bs-close-outside { position: absolute; top: -48px; right: 16px; z-index: 152; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .bottom-sheet.open .bs-close-outside { opacity: 1; pointer-events: all; }
 
     .bs-handle { display: flex; justify-content: center; padding: 12px 0 4px; flex-shrink: 0; }
     .bs-handle-bar { width: 40px; height: 4px; background: var(--border); border-radius: 100px; }
