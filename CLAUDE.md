@@ -8,7 +8,7 @@
 
 ## Workflow
 
-1. **Analyse** — User provides a product image (+ optional species/stone name). Use the `veneer-expert` skill to run a full analysis.
+1. **Analyse** — User provides a product image (+ optional species/stone name). Use the `panel-expert` skill to run a full analysis.
 2. **Score** — Each product gets a composite score (demand × mimicry for films; 7-dimension weighted score for stones/marbles).
 3. **Save** — Write outputs:
    - **JSON entry** → append to `films.json`, `stones.json`, or `marbles.json`
@@ -59,5 +59,5 @@ Stones/Marbles add: `stoneReference`, `colourFamily`, `finish`, `demand`, `mimic
 
 - Always sort JSON arrays by score descending and re-rank after adding new entries.
 - Always push to git after analysis (json + md + image + commit + push).
-- Use the `veneer-expert` skill for all panel/film analyses.
+- Use the `panel-expert` skill for all panel/film analyses.
 - Images go in the category-specific `images/` subdirectory.
