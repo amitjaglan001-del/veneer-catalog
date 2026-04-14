@@ -35,7 +35,8 @@ Any complete India-facing stone panel collection needs these 5 core SKUs:
 |---|---|---|---|---|---|---|---|
 | 1 | stone-011 | SY08 White Cream Linear Travertine | Silver Travertine / Bianco Travertino | **84** | Ultra-Premium | #1 Classic White + Grey Vein | 2026-04-13 |
 | 2 | stone-009 | YYC-SY130 Warm Buff Travertine | Noce Travertine / Walnut Travertine | **82** | Ultra-Premium | #4 Warm Cream (Rich) | 2026-04-13 |
-| 3 | stone-008 | YY-SY134 Warm Cream Travertine | Roman Travertine / Travertino Classico | **81** | Ultra-Premium | #4 Warm Cream (Refined) | 2026-04-13 |
+| 2 | stone-015 | JF12008 Warm Ivory Linear Travertine | Roman Travertine / Travertino Classico | **82** | Ultra-Premium | #4 Warm Cream (WPC) | 2026-04-14 |
+| 4 | stone-008 | YY-SY134 Warm Cream Travertine | Roman Travertine / Travertino Classico | **81** | Ultra-Premium | #4 Warm Cream (Refined) | 2026-04-13 |
 | 4 | stone-012 | Warm Greige — Dual Vein with Copper Hairlines | Diana Royal / Fior di Pesco Carnico | **78** | Premium | Copper Bridge Supp. | 2026-04-13 |
 | 4 | stone-001 | Silver Grey Marble — Bold White & Dark Fissure | Bardiglio / Silver Grey / Tundra Grey | **78** | Premium | #3 Light Grey Marble | 2026-04-13 |
 | 5 | stone-007 | Light Grey Travertine — Multi-Vein Large Slab | Silver Travertine / Grigio Noce | **76** | Premium | Supplementary Grey | 2026-04-13 |
