@@ -413,6 +413,7 @@
     <button class="tab active" data-cat="veneers" id="tab-veneers">Veneers</button>
     <button class="tab" data-cat="stones" id="tab-stones">Stone Panels</button>
     <button class="tab" data-cat="marble" id="tab-marble">Marble Films</button>
+    <button class="tab" data-cat="frames" id="tab-frames">Frames</button>
     <button class="tab locked" data-cat="murals" disabled>Murals</button>
     <button class="tab locked" data-cat="limewash" disabled>Limewash</button>
   </div>
@@ -522,6 +523,7 @@ const CRITERIA = {
   veneers: `Top veneer films target high-demand species — walnut, teak, or oak — with convincing replication. Tone accuracy and grain pattern carry the most weight. Finish calibration is the most common failure point: satin 8–15% for most species, open-pore matte for oak and architect-grade briefs.`,
   stones: `Evaluated across 7 dimensions: Fidelity, Colour Fit, Veining Drama, Finish Quality, Versatility, Texture, and Trend Alignment. Top panels need authentic vein complexity, correct finish calibration, and strong urban demand.`,
   marble: `Marble films are decorative surface wraps for modular furniture. Key criteria: pattern repeat length, EIR emboss depth, matte/gloss calibration. Matte white marble is the #1 demanded decorative surface in Indian modular furniture.`,
+  frames: `Curated art frames for feature walls. Evaluated on palette harmony with panel assortment, frame-material pairing (walnut/black/natural), composition style, and segment fit across Indian metro interiors.`,
   murals: 'Coming soon.', limewash: 'Coming soon.',
 };
 
@@ -533,7 +535,7 @@ function scoreColor(tc) { return tc==='t-strong' ? 'var(--green)' : tc==='t-nich
 function speciesGroup(sp) { if(sp.includes('Walnut'))return'walnut'; if(sp.includes('Teak'))return'teak'; if(sp.includes('Oak')&&!sp.includes('Lacewood')&&!sp.includes('Silky'))return'oak'; return'specialty'; }
 function colourGroup(c) { c=(c||'').toLowerCase(); if(c==='white'||c==='off-white')return'white'; if(c==='grey'||c==='gray')return'grey'; if(c==='beige'||c==='cream'||c==='warm')return'beige'; if(c==='dark'||c==='black'||c==='charcoal')return'dark'; return'special'; }
 
-let allFilms=[], allStones=[], allMarbles=[];
+let allFilms=[], allStones=[], allMarbles=[], allFrames=[];
 let activeSubfilter='all', activeStoneSubfilter='all', activeMarbleSubfilter='all';
 
 // ── Shared: attach drawer + enlarge listeners ──
@@ -732,6 +734,45 @@ async function loadMarbles() {
   attachListeners(); renderMarbleSubfilters();
 }
 
+// ── Frames ──
+let activeFrameSubfilter='all';
+function renderFrameSubfilters() {
+  const counts = { all:allFrames.length };
+  document.getElementById('subfilters').innerHTML =
+    `<button class="subfilter active" data-sf="all">All <span class="sf-count">(${counts.all})</span></button>`;
+}
+
+async function loadFrames() {
+  allFrames = (await fetch('./frames.json').then(r=>r.json())).sort((a,b)=>b.score-a.score);
+  const tbody = document.getElementById('tbody');
+  const grid = document.getElementById('grid');
+  tbody.innerHTML = ''; grid.innerHTML = '';
+  document.getElementById('thead').innerHTML = '<tr><th>Image</th><th>Frame</th><th>Style</th><th class="hide-sm">Best For</th><th>Score</th><th>Tier</th></tr>';
+
+  allFrames.forEach(f => {
+    const tc = f.score>=8.0?'t-strong':f.score>=6.0?'t-niche':'t-low';
+    f._sf = 'all';
+    f._search = [f.name,f.style,f.palette,f.frame,f.bestFor].join(' ').toLowerCase();
+    const sel = f.selected?`<div class="selected-badge">Selected</div>`:'';
+    const tr = document.createElement('tr');
+    tr.dataset.sf='all'; tr.dataset.search=f._search; tr.dataset.selected=f.selected?'true':'false';
+    tr.innerHTML = `
+      <td><div class="img-wrap" data-file="" data-name="${f.name}" data-image="${f.image}">
+        <img src="${f.image}" alt="${f.name}" loading="lazy" />
+        <button class="enlarge-btn" data-src="${f.image}" data-alt="${f.name}" title="Enlarge">${ENLARGE_ICON}</button>
+      </div></td>
+      <td class="name-cell"><div class="film-name">${f.name}</div><div class="film-sub">${f.frame}<br>${f.palette}</div>${sel}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:180px;line-height:1.5">${f.style}</td>
+      <td class="hide-sm" style="font-size:12px;color:var(--muted);max-width:160px;line-height:1.6">${f.bestFor}</td>
+      <td><div class="score-pill ${tc}">${f.score.toFixed(1)}</div></td>
+      <td><span class="tier-badge ${tc}">${f.tier}</span></td>`;
+    tbody.appendChild(tr);
+    grid.innerHTML += gridCard(f, tc, !!f.selected);
+  });
+  document.getElementById('tab-frames').innerHTML = `Frames <span class="sf-count">(${allFrames.length})</span>`;
+  attachListeners(); renderFrameSubfilters();
+}
+
 // ── Drawer ──
 const drawer = document.getElementById('drawer');
 const backdrop = document.getElementById('backdrop');
@@ -759,6 +800,7 @@ function setTab(cat) {
   if(cat==='veneers'){ activeSubfilter='all'; loadCatalog(); }
   else if(cat==='stones'){ activeStoneSubfilter='all'; loadStones(); }
   else if(cat==='marble'){ activeMarbleSubfilter='all'; loadMarbles(); }
+  else if(cat==='frames'){ activeFrameSubfilter='all'; loadFrames(); }
 }
 document.querySelectorAll('.tab:not(.locked)').forEach(t=>t.addEventListener('click',()=>setTab(t.dataset.cat)));
 
@@ -767,10 +809,12 @@ Promise.all([
   fetch('./films.json').then(r=>r.json()).catch(()=>[]),
   fetch('./stones.json').then(r=>r.json()).catch(()=>[]),
   fetch('./marbles.json').then(r=>r.json()).catch(()=>[]),
-]).then(([f,s,m])=>{
+  fetch('./frames.json').then(r=>r.json()).catch(()=>[]),
+]).then(([f,s,m,fr])=>{
   document.getElementById('tab-veneers').innerHTML=`Veneers <span class="sf-count">(${f.length})</span>`;
   document.getElementById('tab-stones').innerHTML=`Stone Panels <span class="sf-count">(${s.length})</span>`;
   document.getElementById('tab-marble').innerHTML=`Marble Films <span class="sf-count">(${m.length})</span>`;
+  document.getElementById('tab-frames').innerHTML=`Frames <span class="sf-count">(${fr.length})</span>`;
 });
 
 const stickyNav = document.getElementById('sticky-nav');
@@ -788,16 +832,17 @@ const bottomSheet = document.getElementById('bottom-sheet');
 const fabBtn = document.getElementById('fab-selected');
 const fabCount = document.getElementById('fab-count');
 
-let cachedFilms=[], cachedStones=[], cachedMarbles=[];
+let cachedFilms=[], cachedStones=[], cachedMarbles=[], cachedFrames=[];
 
 function updateSelectedCount() {
   Promise.all([
     cachedFilms.length ? Promise.resolve(cachedFilms) : fetch('./films.json').then(r=>r.json()).catch(()=>[]),
     cachedStones.length ? Promise.resolve(cachedStones) : fetch('./stones.json').then(r=>r.json()).catch(()=>[]),
     cachedMarbles.length ? Promise.resolve(cachedMarbles) : fetch('./marbles.json').then(r=>r.json()).catch(()=>[]),
-  ]).then(([f,s,m]) => {
-    cachedFilms=f; cachedStones=s; cachedMarbles=m;
-    const total = f.filter(x=>x.selected).length + s.filter(x=>x.selected).length + m.filter(x=>x.selected).length;
+    cachedFrames.length ? Promise.resolve(cachedFrames) : fetch('./frames.json').then(r=>r.json()).catch(()=>[]),
+  ]).then(([f,s,m,fr]) => {
+    cachedFilms=f; cachedStones=s; cachedMarbles=m; cachedFrames=fr;
+    const total = f.filter(x=>x.selected).length + s.filter(x=>x.selected).length + m.filter(x=>x.selected).length + fr.filter(x=>x.selected).length;
     fabCount.textContent = `(${total})`;
     fabBtn.style.display = total > 0 ? '' : 'none';
   });
@@ -810,6 +855,7 @@ function openBottomSheet() {
     ['Veneers', cachedFilms.filter(x=>x.selected)],
     ['Stone Panels', cachedStones.filter(x=>x.selected)],
     ['Marble Films', cachedMarbles.filter(x=>x.selected)],
+    ['Frames', cachedFrames.filter(x=>x.selected)],
   ];
   sections.forEach(([title, items]) => {
     if (!items.length) return;
